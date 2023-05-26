@@ -1,6 +1,8 @@
 {
   "index": "Introduction",
   "another": "Another Page",
+  "why": "Why Fast APIs Matter",
+  "baseline": "Performance Baseline",
   "advanced": "Advanced (A Folder)",
   "about": {
     "title": "About",

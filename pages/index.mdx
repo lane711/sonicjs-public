@@ -1,59 +1,52 @@
-# SonicJs, The Fastest Headless CMS on Earth
+# SonicJs: The Fastest Headless CMS on Earth
 
 Welcome to SonicJs! SonicJs is a Headless CMS built on Cloudflare Workers.
 
-So, you are probably familiar with Cloudflare's awseome CDN, which allows developers to publish their application's static files(css & javascript) and images to their vast network of over 200 nodes world wide.
+So, you are probably familiar with Cloudflare's awesome CDN, which allows developers to publish their application's static files(CSS & javascript) and images to their vast network of over 200 nodes worldwide.
 
-Well imagine if you could deploy your code to the same 200+ worldwide servers, **drastically** reducing network latency.
+Well, imagine if you could deploy your code to the same 200+ worldwide servers, **drastically** reducing network latency.
 
-And to take it one step further what if your entire database was also deployed and synconized to the same 200+ worldwide nodes...
+And to take it one step further what if your entire database was also deployed and synchronized to the same 200+ worldwide nodes...
 
-Well this is exactly what SonicJs on Cloudflare workers allows you to do! Global users will interact with your application's API with blazingly fast response times.
+This is exactly what SonicJs on Cloudflare workers allows you to do! Global users will interact with your application's API with blazingly fast response times.
 
 ## How Fast is "Blazingly" Fast?
 
-Let's compare SonicJs to Node with a Postgres daatasbe and Strapi, a popular open source Headless CMS using a Postgres database. 
+Let's compare SonicJs to Node with a Postgres database and Strapi, a popular open-source Headless CMS using a Postgres database. 
 
-The intention is to compare SonicJs to a typical Node app running on a server infrastructure setup that is most common amoung product applications.
+The intention is to compare SonicJs to a typical Node app running on a server infrastructure setup that is most common among product applications.
 
 | Platform      | Average Response Time | Difference |
 | ----------- | ----------- | ----------- |
-| Strapi      | 460ms       | - |
-| Node + Postgres   | 420ms        | 1.1x Faster|
-| SonicJs   | 70ms        | 7.3x Faster|
+| Strapi      | 342.1ms       | - baseline - |
+| Node + Postgres   | 320.2ms        | 1.06x Faster|
+| SonicJs   | 52.7ms        | 6.4x Faster|
+
+The details of our performance benchmark here is available at [here](/performance-benchmarks). This includes dataset details, EC2 setup, K6 performance test parameters, etc. The 6.4x is just a rough idea based on our simple load tests. More comprehensive stress tests are planned for the future.
+
+Regardless of your application's API requirements, SonicJs will be materially faster. The more complex your application or the more data your application has, that 6.4x could be even higher. 
+
+### How can it be so much faster than a standard Node app?
+
+Cloudflare Workers is a serverless platform offered by Cloudflare that allows developers to run their code at the edge of Cloudflare's network. This means that the code is executed in data centers closest to the end users, resulting in reduced latency and faster response times.
+
+Here are a few reasons why Cloudflare Workers can be fast:
+
+**Distributed Edge Network**: Cloudflare has a vast network of data centers spread across the globe. When you deploy your code using Workers, it runs on this distributed edge network. This proximity to users helps reduce the distance and network hops between the code execution and the end users, resulting in faster response times.
+
+**Low Latency**: By running code at the edge, Cloudflare Workers can respond to requests quickly, without the need to route traffic to a centralized server. This reduces the round-trip time for requests, leading to lower latency and faster processing.
+
+**Optimized Architecture**: Cloudflare has optimized its infrastructure to ensure the efficient execution of Workers. They leverage technologies like V8 isolates, a high-performance JavaScript engine, to execute code quickly. Additionally, Cloudflare continuously invests in improving the performance of its network and infrastructure.
+
+**Caching and Content Delivery**: Cloudflare's edge network includes various caching mechanisms. When you use Workers, you can leverage these caching capabilities to store frequently accessed data or responses closer to the end users. This reduces the need to fetch data from the origin server, resulting in faster content delivery.
+
+**Asynchronous Processing**: Cloudflare Workers are designed to handle requests asynchronously. They can process multiple requests concurrently, without blocking or waiting for previous requests to complete. This asynchronous nature enables efficient utilization of server resources and enhances overall performance.
+
+It's important to note that the actual performance of Cloudflare Workers can vary depending on various factors such as the complexity of your code, the number of requests, the geographical distribution of your users, and the specific use case. However, in general, Cloudflare Workers' architecture and edge network contribute to its ability to provide fast response times and improved performance.
 
 
+## Scalability
 
-The details of our performance benchmark here is available at [here](/performance-benchmarks). This includes dataset details,
+SonicJs comes "web scale" out of the box.
 
-## Background
 
-Recently, a fellow developer turned me on to Cloudflare Workers and I must say, I haven't been this impressed with new technology since using AWS EC2 for the first time in 2007.
-
-If you're not familiar, Cloudflare Workers take their CDN to the next level, allowing you to deploy your application code and database to their CDN just like you would with your assets. This means you can instantly deploy your code and database to over 200 server farms globally, providing insanely low latency for all requests, regardless of the user's location. And, with Cloudflare's KV Database, we can build applications that respond to user requests faster than ever before.
-
-As a result, I'm working on a proof-of-concept of a headless CMS-based version of SonicJs on top of Cloudflare Workers.
-
-While SonicJs has a solid following, I've realized that most developers prefer to bring their own front-end rather than having it partially built for them. Therefore, I'm building a headless CMS that will have an administrative backend where developers can log in as administrators and manage various aspects of their application, such as authentication, content types, modules, media, UX customization, backups, and more.
-
-I'm excited about this project, and if you're familiar with Strapi or other similar headless CMS, think Strapi on steroids in terms of performance.
-
-I'm not affiliated with Cloudflare, but their pricing is reasonable, and they offer a solid free tier, making it affordable for most application infrastructure needs.
-
-I believe that by using Cloudflare Workers, we can make SonicJs stand out from other headless CMS platforms in terms of speed and performance. With a global infrastructure and a powerful database system, SonicJs will be able to handle a significant amount of traffic and data, ensuring that end-users experience minimal latency with pretty close to zero infrastructure concerns.
-
-Moreover, SonicJs will provide developers with the flexibility to use their front-end frameworks of choice, making it easier for them to create customized, responsive, and engaging applications. The platform will also support custom content types (such as blogs, books, movies, customers, etc) making it ideal for a wide range of applications.
-
-At the same time, SonicJs will be easy to use, even for developers with limited coding skills. With a drag-and-drop form editor, developers can manage content types effortlessly, while the module manager will allow them to implement custom workflows and business logic using Javascript/Typescript.
-
-Furthermore, the platform's media manager will make it easy to manage images, videos, and PDFs, while the UX customization features will enable developers to create a seamless experience for their end-users.
-
-Finally, SonicJs will have a backup and restore system, allowing developers to protect their data and ensure that they can recover quickly in case of any unexpected data loss or corruption. The platform will also support staging and production environments, enabling developers to test and refine their applications before going live.
-
-In conclusion, I believe that SonicJs has the potential to become the fastest and most powerful headless CMS platform on the market. By leveraging Cloudflare Workers, we can provide developers with a seamless, flexible, and responsive platform that will enable them to create amazing applications quickly and easily.
-
-So, let's join forces and make SonicJs the best headless CMS platform in the world!
-
-If you're interested in contributing to this open-source project or have any thoughts, join our existing Discord (https://discord.gg/nYAWyadw) community.
-
-Let's make SonicJs (https://sonicjs.com) the fastest headless CMS on Earth!

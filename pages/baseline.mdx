@@ -1,0 +1,35 @@
+# Overview
+
+
+Establishing performance benchmarks among different headless CMS frameworks is crucial for several reasons. Firstly, it allows developers to identify which CMS platforms can deliver fast and responsive content delivery, ensuring a smooth user experience. Performance-based comparisons help developers choose frameworks that can handle high traffic loads efficiently, preventing slow page load times or API response delays. Additionally, benchmarking performance enables developers to optimize their application's performance by selecting a CMS that aligns with their specific requirements. It helps in identifying bottlenecks, improving caching strategies, and implementing performance enhancements. By establishing performance standards, developers can make informed decisions and build applications that deliver optimal performance, enhancing user satisfaction and engagement.
+
+# Dataset
+
+| Entity      | Record Count| 
+| ----------- | ----------- | 
+| Customer      | 250,000       |
+| Products   | 500,000       |
+| Orders   | 500,000       | 
+| Order Details   | 1,000,000       | 
+
+Entity Relationships:
+Each Customer has:
+- 5 Products
+- 3 Orders
+- 3 Order Details
+
+I reallize that these entitty relationship don't make snese in the real world. I has trouble figuring out getting Strapi to work the way that I had hoped when I went to pull the customer and nested data from the API so I ended up with this more flat structure.
+
+# Strapi
+AWS EC2 setup:
+
+
+## K6 Result
+![Kiku](public/images/strapi-k6.png)
+
+
+
+# Introduction
+
+Lorem ipsum
+
