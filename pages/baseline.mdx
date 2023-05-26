@@ -5,6 +5,8 @@ Establishing performance benchmarks among different headless CMS frameworks is c
 
 # Dataset
 
+A moderately sized dataset with a very simple schema was used for this initial round of benchmarking.
+
 | Entity      | Record Count| 
 | ----------- | ----------- | 
 | Customer      | 250,000       |
@@ -12,19 +14,34 @@ Establishing performance benchmarks among different headless CMS frameworks is c
 | Orders   | 500,000       | 
 | Order Details   | 1,000,000       | 
 
-Entity Relationships:
+## Entity Relationships:
+
 Each Customer has:
 - 5 Products
 - 3 Orders
 - 3 Order Details
 
-I reallize that these entitty relationship don't make snese in the real world. I has trouble figuring out getting Strapi to work the way that I had hoped when I went to pull the customer and nested data from the API so I ended up with this more flat structure.
+Note: I realize that these entity relationships don't make sense in the real world. I had trouble getting Strapi to work the way that I had hoped when I went to pull the customer and nested data from the API so I ended up with this more flat structure.
+
+# Test Details
+1. Get a random page of 25 results (gets a list of 25 customers and their related data)
+1. Get a single customer record and their related data
+1. Repeat steps 1 & 2 for 10 seconds
+
+We'll perform the same test against all 3 platforms in order to establish an initial baseline.
+
+The K6 Repository used to run the tests can be found here:
+https://github.com/lane711/sonicjs-performance-k6
 
 # Strapi
-AWS EC2 setup:
+Server setup: AWS EC2 t3.xlarge
+| Instance      | vCPU| Mem (GiB) | Storage | Network Performance (Gbps)***
+| ----------- | ----------- | ---- |  ---- |  ---- | 
+| t3.xlarge | 4 | 16 | EBS | Up tp 5 |
 
 
-## K6 Result
+
+## K6 Results
 ![Kiku](public/images/strapi-k6.png)
 
 
