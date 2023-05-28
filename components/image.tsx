@@ -15,27 +15,38 @@
 //     return <CustomImage />
 //   }
 
-
-
-  import { useState } from 'react'
-import styles from './counters.module.css'
-
-function Image() {
-  const [count, setCount] = useState(0)
-
-  function handleClick() {
-    setCount(count + 1)
-  }
-
+import Image from 'next/image';
+ 
+export default function Page() {
   return (
-    <div>
-      <button onClick={handleClick} className={styles.counter}>
-        Clicked {count} times
-      </button>
-    </div>
-  )
+    <Image
+      src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstrapi-k6.42ea10b2.png&w=3840&q=75"
+      width={500}
+      height={500}
+      alt="Picture of the author"
+    />
+  );
 }
 
-export default function MyApp() {
-  return <Image />
-}
+//   import { useState } from 'react'
+// import styles from './counters.module.css'
+
+// function Image() {
+//   const [count, setCount] = useState(0)
+
+//   function handleClick() {
+//     setCount(count + 1)
+//   }
+
+//   return (
+//     <div> Image--
+//       <button onClick={handleClick} className={styles.counter}>
+//         Clicked {count} times
+//       </button>
+//     </div>
+//   )
+// }
+
+// export default function MyApp() {
+//   return <Image />
+// }
