@@ -20,7 +20,7 @@ import Image from 'next/image';
 export default function Page() {
   return (
     <Image
-      src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstrapi-k6.42ea10b2.png&w=3840&q=75"
+      src="/public/images/headless-cms-content-list.png"
       width={500}
       height={500}
       alt="Picture of the author"
