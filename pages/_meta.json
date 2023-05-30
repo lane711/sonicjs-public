@@ -2,9 +2,10 @@
   "index": "Introduction",
   "components": "Components Test",
   "why": "Why Fast APIs Matter",
-  "baseline": "Performance Baseline",
+  "baseline": "Performance Baseline 🔥",
   "legacy": "Legacy",
-  "docs": "Docs",
+  "getting-started": "Getting Started",
+  "content-types": "Content Types",
   "about": {
     "title": "About",
     "type": "page"
