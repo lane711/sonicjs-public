@@ -189,9 +189,9 @@ export const navigation = [
     links: [
       { title: 'Introduction', href: '/' },
       { title: 'Quickstart', href: '/quickstart' },
-      { title: 'SDKs', href: '/sdks' },
-      { title: 'Authentication', href: '/authentication' },
-      { title: 'Pagination', href: '/pagination' },
+      { title: 'Why Fast APIs Matter', href: '/why' },
+      { title: 'Performance Baseline', href: '/baseline' },
+      { title: 'Legacy', href: '/legacy' },
       { title: 'Errors', href: '/errors' },
       { title: 'Webhooks', href: '/webhooks' },
     ],
