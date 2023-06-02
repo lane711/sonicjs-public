@@ -188,7 +188,6 @@ export const navigation = [
     title: 'Guides',
     links: [
       { title: 'Introduction', href: '/' },
-      { title: 'Getting Started', href: '/getting-started' },
       { title: 'Features', href: '/features' },
       { title: 'Why Fast APIs Matter', href: '/why' },
       { title: 'Performance Baseline 🔥', href: '/baseline' },
@@ -197,16 +196,12 @@ export const navigation = [
       { title: 'About', href: '/about' },
     ],
   },
-  // {
-  //   title: 'Resources',
-  //   links: [
-  //     { title: 'Contacts', href: '/contacts' },
-  //     { title: 'Conversations', href: '/conversations' },
-  //     { title: 'Messages', href: '/messages' },
-  //     { title: 'Groups', href: '/groups' },
-  //     { title: 'Attachments', href: '/attachments' },
-  //   ],
-  // },
+  {
+    title: 'Docs',
+    links: [
+      { title: 'Getting Started', href: '/getting-started' },
+    ],
+  },
 ]
 
 export function Navigation(props) {
