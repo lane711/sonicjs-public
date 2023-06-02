@@ -9,6 +9,8 @@ import { useMobileNavigationStore } from '@/components/MobileNavigation'
 import '@/styles/tailwind.css'
 import 'focus-visible'
 
+import { Analytics } from '@vercel/analytics/react';
+
 function onRouteChange() {
   useMobileNavigationStore.getState().close()
 }
@@ -32,6 +34,7 @@ export default function App({ Component, pageProps }) {
       <MDXProvider components={mdxComponents}>
         <Layout {...pageProps}>
           <Component {...pageProps} />
+          <Analytics />
         </Layout>
       </MDXProvider>
     </>
