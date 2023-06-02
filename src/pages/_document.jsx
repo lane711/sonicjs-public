@@ -40,6 +40,7 @@ export default function Document() {
     <Html lang="en">
       <Head>
         <script dangerouslySetInnerHTML={{ __html: modeScript }} />
+        <script language="javascript" src="/js/smartlook.js" async/>
       </Head>
       <body className="bg-white antialiased dark:bg-zinc-900">
         <Main />
