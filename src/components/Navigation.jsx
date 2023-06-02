@@ -193,6 +193,7 @@ export const navigation = [
       { title: 'Why Fast APIs Matter', href: '/why' },
       { title: 'Performance Baseline 🔥', href: '/baseline' },
       { title: 'Legacy', href: '/legacy' },
+      { title: 'Headless', href: '/nodejs-headless-cms' },
       { title: 'About', href: '/about' },
     ],
   },
