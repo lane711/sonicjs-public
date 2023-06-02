@@ -189,8 +189,9 @@ export const navigation = [
     links: [
       { title: 'Introduction', href: '/' },
       { title: 'Getting Started', href: '/getting-started' },
+      { title: 'Features', href: '/features' },
       { title: 'Why Fast APIs Matter', href: '/why' },
-      { title: 'Performance Baseline', href: '/baseline' },
+      { title: 'Performance Baseline 🔥', href: '/baseline' },
       { title: 'Legacy', href: '/legacy' },
       { title: 'About', href: '/about' },
     ],
