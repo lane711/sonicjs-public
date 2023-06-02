@@ -26,6 +26,20 @@ function TopLevelNavItem({ href, children }) {
   )
 }
 
+function TopLevelNavItemNewTab({ href, children }) {
+  return (
+    <li>
+      <Link
+      target='_blank'
+        href={href}
+        className="text-sm leading-5 text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white"
+      >
+        {children}
+      </Link>
+    </li>
+  )
+}
+
 export const Header = forwardRef(function Header({ className }, ref) {
   let { isOpen: mobileNavIsOpen } = useMobileNavigationStore()
   let isInsideMobileNavigation = useIsInsideMobileNavigation()
@@ -68,9 +82,8 @@ export const Header = forwardRef(function Header({ className }, ref) {
       <div className="flex items-center gap-5">
         <nav className="hidden md:block">
           <ul role="list" className="flex items-center gap-8">
-            <TopLevelNavItem href="/">API</TopLevelNavItem>
-            <TopLevelNavItem target="_blank" href="https://discord.gg/8bMy6bv3sZ">Discord</TopLevelNavItem>
-            <TopLevelNavItem href="#">Support</TopLevelNavItem>
+            <TopLevelNavItemNewTab href="https://github.com/lane711/sonicjs">Github</TopLevelNavItemNewTab>
+            <TopLevelNavItemNewTab href="https://discord.gg/8bMy6bv3sZ">Discord</TopLevelNavItemNewTab>
           </ul>
         </nav>
         <div className="hidden md:block md:h-5 md:w-px md:bg-zinc-900/10 md:dark:bg-white/15" />
@@ -78,9 +91,9 @@ export const Header = forwardRef(function Header({ className }, ref) {
           <MobileSearch />
           <ModeToggle />
         </div>
-        <div className="hidden min-[416px]:contents">
+        {/* <div className="hidden min-[416px]:contents">
           <Button href="#">Sign in</Button>
-        </div>
+        </div> */}
       </div>
     </motion.div>
   )
