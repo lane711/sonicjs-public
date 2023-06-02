@@ -207,7 +207,7 @@ function SmallPrint() {
         <SocialLink href="#" icon={GitHubIcon}>
           Follow us on GitHub
         </SocialLink>
-        <SocialLink href="#" icon={DiscordIcon}>
+        <SocialLink href="https://discord.gg/8bMy6bv3sZ" icon={DiscordIcon}>
           Join our Discord server
         </SocialLink>
       </div>
