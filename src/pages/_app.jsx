@@ -25,9 +25,9 @@ export default function App({ Component, pageProps }) {
     <>
       <Head>
         {router.pathname === '/' ? (
-          <title>Protocol API Reference</title>
+          <title>SonicJs Headless CMS</title>
         ) : (
-          <title>{`${pageProps.title} - Protocol API Reference`}</title>
+          <title>{`${pageProps.title} - SonicJs Headless CMS`}</title>
         )}
         <meta name="description" content={pageProps.description} />
       </Head>
