@@ -202,6 +202,15 @@ export const navigation = [
       { title: 'Getting Started', href: '/getting-started' },
     ],
   },
+  {
+    title: 'API',
+    links: [
+      { title: 'Content', href: '/content' },
+      { title: 'Content Types', href: '/content-types' },
+      { title: 'Users', href: '/users' },
+
+    ],
+  },
 ]
 
 export function Navigation(props) {
