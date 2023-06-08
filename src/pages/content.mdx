@@ -38,10 +38,10 @@ The content model is simple as most of your data properties will be nested in th
         Limit the number of content records returned.
       </Property>
       <Property name="includeContentType" type="boolean">
-        Includes the content type meta data along with the content record. This is used in the admin section when generating the edit form. 
+        Includes the content type meta data along with the content record. This is used in the admin section when generating the edit form.
       </Property>
       <Property name="contentType" type="string">
-        Only show content of a certain content type (ie: 'blog', 'book')
+        Only returns content of a certain content type (ie: 'blog', 'book')
       </Property>
       <Property name="keysOnly" type="boolean">
         Only list the keys (unique identifiers), does not include any data
@@ -52,120 +52,70 @@ The content model is simple as most of your data properties will be nested in th
   <Col sticky>
 
     <CodeGroup title="Request" tag="GET" label="/v1/content">
-
     ```bash {{ title: 'cURL' }}
-    curl -G https://api.protocol.chat/v1/conversations \
-      -H "Authorization: Bearer {token}" \
-      -d limit=10
-    ```
 
-    ```js
-    import ApiClient from '@example/protocol-api'
-
-    const client = new ApiClient(token)
-
-    await client.conversations.list()
-    ```
-
-    ```python
-    from protocol_api import ApiClient
-
-    client = ApiClient(token)
-
-    client.conversations.list()
-    ```
-
-    ```php
-    $client = new \Protocol\ApiClient($token);
-
-    $client->conversations->list();
-    ```
-
-    </CodeGroup>
+http://localhost:8788/v1/content
+```
+</CodeGroup>
 
     ```json {{ title: 'Response' }}
-    {
-      "has_more": false,
-      "data": [
-        {
-          "id": "xgQQXg3hrtjh7AvZ",
-          "contact_id": "WAz8eIbvDR60rouK",
-          "group_id": null,
-          "pinned_message_id": null,
-          "is_pinned": false,
-          "is_muted": false,
-          "last_active_at": 705103200,
-          "last_opened_at": 705103200,
-          "created_at": 692233200,
-          "archived_at": null
-        },
-        {
-          "id": "hSIhXBhNe8X1d8Et"
-          // ...
-        }
-      ]
-    }
-    ```
+
+[
+{
+"systemId": "blog",
+"title": "What is the Fastest Headless CMS on the Market?",
+"body": "Maecenas sed diam...",
+"publishOn": "2023-06-07T12:00:00-07:00",
+},
+{
+"systemId": "article",
+"title": "Top 5 Headless CMS of 2023",
+"body": "Sed posuere consecte...",
+"category" : "Headless CMS"
+}
+]
+```
 
   </Col>
 </Row>
 
 ---
 
-## Create a conversation {{ tag: 'POST', label: '/v1/conversations' }}
+## Create content {{ tag: 'POST', label: '/v1/content' }}
 
 <Row>
   <Col>
 
-    This endpoint allows you to add a new conversation between you and a contact or group. A contact or group id is required to create a conversation.
+    This endpoint allows you to add a new content. It is an upsert, so you can create or update content with the same endpoint.
 
     ### Required attributes
 
     <Properties>
-      <Property name="contact_id" type="string">
-        Unique identifier for the other contact in the conversation.
-      </Property>
-      <Property name="group_id" type="string">
-        Unique identifier for the group that the conversation belongs to.
-      </Property>
+  <Property name="key" type="string">
+    Unique identifier for the content.
+  </Property>
+  <Property name="value" type="string">
+    The Json string containing the content data
+  </Property>
     </Properties>
 
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="POST" label="/v1/conversations">
+    <CodeGroup title="Request" tag="POST" label="/v1/content">
 
-    ```bash {{ title: 'cURL' }}
-    curl https://api.protocol.chat/v1/conversations \
-      -H "Authorization: Bearer {token}" \
-      -d 'contact_id'="WAz8eIbvDR60rouK"
-    ```
-
-    ```js
-    import ApiClient from '@example/protocol-api'
-
-    const client = new ApiClient(token)
-
-    await client.conversations.create({
-      contact_id: 'WAz8eIbvDR60rouK',
-    })
-    ```
-
-    ```python
-    from protocol_api import ApiClient
-
-    client = ApiClient(token)
-
-    client.conversations.create(contact_id="WAz8eIbvDR60rouK")
-    ```
-
-    ```php
-    $client = new \Protocol\ApiClient($token);
-
-    $client->conversations->create([
-      'contact_id' => 'WAz8eIbvDR60rouK',
-    ]);
-    ```
+    ```json {{ title: 'body' }}
+{
+      "key" :"site1::content::blog::16861809562680000::vbeqmvt",
+      "data":
+        {
+          "systemId": "blog",
+          "title": "Top 5 Headless CMS of 2023",
+          "body" : "Sed posuere consectetur est...",
+          "publishOn" : "2023-06-29T12:00:00-07:00"
+        }
+  }
+```
 
     </CodeGroup>
 
