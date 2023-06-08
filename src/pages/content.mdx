@@ -1,11 +1,11 @@
 export const description =
-  'On this page, we’ll dive into the different conversation endpoints you can use to manage conversations programmatically.'
+  'On this page, we’ll dive into the different content endpoints you can use to manage content programmatically.'
 
 # Content
 
 Content records are the primary entity in SonicJs — everything is content. This includes any custom content types that you
 create which could be anything (books, blog posts, movies, etc). Even users are technically just content,
-however are access thru a separate API for security reason. {{ className: 'lead' }}
+however they are accessed thru a separate API for security reason. {{ className: 'lead' }}
 
 ## The content model
 
@@ -59,20 +59,21 @@ http://localhost:8788/v1/content
 </CodeGroup>
 
     ```json {{ title: 'Response' }}
-
 [
-{
-"systemId": "blog",
-"title": "What is the Fastest Headless CMS on the Market?",
-"body": "Maecenas sed diam...",
-"publishOn": "2023-06-07T12:00:00-07:00",
-},
-{
-"systemId": "article",
-"title": "Top 5 Headless CMS of 2023",
-"body": "Sed posuere consecte...",
-"category" : "Headless CMS"
-}
+      {
+        "key": "site1::content::blog::16861809259460000::4ppge8u",
+        "systemId": "blog",
+        "title": "What is the Fastest Headless CMS on the Market?",
+        "body": "Maecenas sed diam...",
+        "publishOn": "2023-06-07T12:00:00-07:00",
+      },
+      {
+        "key": "site1::content::article::16861809259460000::4ppge8u",
+        "systemId": "article",
+        "title": "Top 5 Headless CMS of 2023",
+        "body": "Sed posuere consecte...",
+        "category" : "Headless CMS"
+      }
 ]
 ```
 
@@ -81,7 +82,58 @@ http://localhost:8788/v1/content
 
 ---
 
-## Create content {{ tag: 'POST', label: '/v1/content' }}
+## Retrieve a content record {{ tag: 'GET', label: '/v1/content/:id' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to retrieve a single record.
+
+    ### Optional attributes
+
+    <Properties>
+      <Property name="limit" type="integer">
+        Limit the number of content records returned.
+      </Property>
+      <Property name="includeContentType" type="boolean">
+        Includes the content type meta data along with the content record. This is used in the admin section when generating the edit form.
+      </Property>
+      <Property name="contentType" type="string">
+        Only returns content of a certain content type (ie: 'blog', 'book')
+      </Property>
+      <Property name="keysOnly" type="boolean">
+        Only list the keys (unique identifiers), does not include any data
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="GET" label="/v1/content/site1::content::article::16857474370560000::bpsxzzu">
+    ```bash {{ title: 'cURL' }}
+
+http://localhost:8788/v1/content/site1::content::article::16857474370560000::bpsxzzu
+```
+</CodeGroup>
+
+    ```json {{ title: 'Response' }}
+
+    {
+      "key": "site1::content::article::16861809259460000::4ppge8u",
+      "systemId": "article",
+      "title": "Top 5 Headless CMS of 2023",
+      "body": "Sed posuere consecte...",
+      "category" : "Headless CMS"
+    }
+
+```
+
+  </Col>
+</Row>
+
+---
+
+## Create/Update content {{ tag: 'POST', label: '/v1/content' }}
 
 <Row>
   <Col>
@@ -92,10 +144,10 @@ http://localhost:8788/v1/content
 
     <Properties>
   <Property name="key" type="string">
-    Unique identifier for the content.
+    Unique identifier for the content. Do not include the key property for new content.
   </Property>
-  <Property name="value" type="string">
-    The Json string containing the content data
+  <Property name="data" type="string">
+    The Json string containing the content data. This can include any shape of
   </Property>
     </Properties>
 
@@ -137,192 +189,3 @@ http://localhost:8788/v1/content
   </Col>
 </Row>
 
----
-
-## Retrieve a conversation {{ tag: 'GET', label: '/v1/conversations/:id' }}
-
-<Row>
-  <Col>
-
-    This endpoint allows you to retrieve a conversation by providing the conversation id. Refer to [the list](#the-conversation-model) at the top of this page to see which properties are included with conversation objects.
-
-  </Col>
-  <Col sticky>
-
-    <CodeGroup title="Request" tag="GET" label="/v1/conversations/xgQQXg3hrtjh7AvZ">
-
-    ```bash {{ title: 'cURL' }}
-    curl https://api.protocol.chat/v1/conversations/xgQQXg3hrtjh7AvZ \
-      -H "Authorization: Bearer {token}"
-    ```
-
-    ```js
-    import ApiClient from '@example/protocol-api'
-
-    const client = new ApiClient(token)
-
-    await client.conversations.get('xgQQXg3hrtjh7AvZ')
-    ```
-
-    ```python
-    from protocol_api import ApiClient
-
-    client = ApiClient(token)
-
-    client.conversations.get("xgQQXg3hrtjh7AvZ")
-    ```
-
-    ```php
-    $client = new \Protocol\ApiClient($token);
-
-    $client->conversations->get('xgQQXg3hrtjh7AvZ');
-    ```
-
-    </CodeGroup>
-
-    ```json {{ title: 'Response' }}
-    {
-      "id": "xgQQXg3hrtjh7AvZ",
-      "contact_id": "WAz8eIbvDR60rouK",
-      "group_id": null,
-      "pinned_message_id": null,
-      "is_pinned": false,
-      "is_muted": false,
-      "last_active_at": 705103200,
-      "last_opened_at": 705103200,
-      "created_at": 692233200,
-      "archived_at": null
-    }
-    ```
-
-  </Col>
-</Row>
-
----
-
-## Update a conversation {{ tag: 'PUT', label: '/v1/conversations/:id' }}
-
-<Row>
-  <Col>
-
-    This endpoint allows you to perform an update on a conversation. Examples of updates are pinning a message, muting or archiving the conversation, or pinning the conversation itself.
-
-    ### Optional attributes
-
-    <Properties>
-      <Property name="pinned_message_id" type="string">
-        Unique identifier for the pinned message.
-      </Property>
-      <Property name="is_pinned" type="boolean">
-        Whether or not the conversation has been pinned.
-      </Property>
-      <Property name="is_muted" type="boolean">
-        Whether or not the conversation has been muted.
-      </Property>
-      <Property name="archived_at" type="timestamp">
-        Timestamp of when the conversation was archived.
-      </Property>
-    </Properties>
-
-  </Col>
-  <Col sticky>
-
-    <CodeGroup title="Request" tag="PUT" label="/v1/conversations/xgQQXg3hrtjh7AvZ">
-
-    ```bash {{ title: 'cURL' }}
-    curl -X PUT https://api.protocol.chat/v1/conversations/xgQQXg3hrtjh7AvZ \
-      -H "Authorization: Bearer {token}" \
-      -d 'is_muted'=true
-    ```
-
-    ```js
-    import ApiClient from '@example/protocol-api'
-
-    const client = new ApiClient(token)
-
-    await client.conversations.update('xgQQXg3hrtjh7AvZ', {
-        is_muted: true,
-    })
-    ```
-
-    ```python
-    from protocol_api import ApiClient
-
-    client = ApiClient(token)
-
-    client.conversations.update("xgQQXg3hrtjh7AvZ", is_muted=True)
-    ```
-
-    ```php
-    $client = new \Protocol\ApiClient($token);
-
-    $client->conversations->update('xgQQXg3hrtjh7AvZ', [
-      'is_muted' => true,
-    ]);
-    ```
-
-    </CodeGroup>
-
-    ```json {{ title: 'Response' }}
-    {
-      "id": "xgQQXg3hrtjh7AvZ",
-      "contact_id": "WAz8eIbvDR60rouK",
-      "group_id": null,
-      "pinned_message_id": null,
-      "is_pinned": false,
-      "is_muted": true,
-      "last_active_at": 705103200,
-      "last_opened_at": 705103200,
-      "created_at": 692233200,
-      "archived_at": null
-    }
-    ```
-
-  </Col>
-</Row>
-
----
-
-## Delete a conversation {{ tag: 'DELETE', label: '/v1/conversations/:id' }}
-
-<Row>
-  <Col>
-
-    This endpoint allows you to delete your conversations in Protocol. Note: This will permanently delete the conversation and all its messages — archive it instead if you want to be able to restore it later.
-
-  </Col>
-  <Col sticky>
-
-    <CodeGroup title="Request" tag="DELETE" label="/v1/conversations/xgQQXg3hrtjh7AvZ">
-
-    ```bash {{ title: 'cURL' }}
-    curl -X DELETE https://api.protocol.chat/v1/conversations/xgQQXg3hrtjh7AvZ \
-      -H "Authorization: Bearer {token}"
-    ```
-
-    ```js
-    import ApiClient from '@example/protocol-api'
-
-    const client = new ApiClient(token)
-
-    await client.conversations.delete('xgQQXg3hrtjh7AvZ')
-    ```
-
-    ```python
-    from protocol_api import ApiClient
-
-    client = ApiClient(token)
-
-    client.conversations.delete("xgQQXg3hrtjh7AvZ")
-    ```
-
-    ```php
-    $client = new \Protocol\ApiClient($token);
-
-    $client->conversations->delete('xgQQXg3hrtjh7AvZ');
-    ```
-
-    </CodeGroup>
-
-  </Col>
-</Row>
