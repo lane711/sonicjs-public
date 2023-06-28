@@ -205,10 +205,7 @@ export const navigation = [
   {
     title: 'API',
     links: [
-      { title: 'Content', href: '/content' },
-      { title: 'Content Type', href: '/content-type' },
-      { title: 'User', href: '/user' },
-
+      { title: 'Content', href: '/content' }
     ],
   },
 ]
