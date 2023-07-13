@@ -200,6 +200,7 @@ export const navigation = [
     title: 'Docs',
     links: [
       { title: 'Getting Started', href: '/getting-started' },
+      { title: 'Tables', href: '/tables' },
     ],
   },
   {
