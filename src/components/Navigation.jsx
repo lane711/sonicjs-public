@@ -206,7 +206,8 @@ export const navigation = [
   {
     title: 'API',
     links: [
-      { title: 'Content', href: '/content' }
+      { title: 'Table', href: '/table-api' },
+      { title: 'Record', href: '/record-api' }
     ],
   },
 ]

@@ -8,7 +8,7 @@ npm install
 npm run dev
 ```
 
-Copy `/wrangler.example.toml` to `/wrangler.toml` and update the 4 required Cloudfalre values:
+Rename `/wrangler.example.toml` to `/wrangler.toml` and update the 4 required Cloudfalre values:
 
 ```text copy
 compatibility_date = "2023-05-18"
@@ -28,6 +28,7 @@ kv_namespaces = [
   { binding = "KVDATA", preview_id="?????", id = "?????" }
 ]
 
+# Run the `wrangler d1 create sonicjs` command and copy the id below
 [[d1_databases]]
 binding = "D1DATA"
 database_name = "sonicjs"
