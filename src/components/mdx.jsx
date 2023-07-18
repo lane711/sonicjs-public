@@ -92,3 +92,12 @@ export function Property({ name, type, children }) {
     </li>
   )
 }
+
+export function Blog() {
+  return (
+    <ul>
+      <li><a href="/blog/strapi-vs-ghost-vs-sonicjs">A Comparison of Strapi, Ghost, and SonicJS</a></li>
+      <li><a href="/blog/strapi-vs-directus-vs-sonicjs">A Comparison of Strapi, Directus, and SonicJS</a></li>
+    </ul>
+  )
+}
