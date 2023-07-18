@@ -1,4 +1,6 @@
 import { Head, Html, Main, NextScript } from 'next/document'
+import {GoogleTag} from '../components/Google'
+import {SmartLook} from '../components/SmartLook'
 
 const modeScript = `
   let darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
@@ -40,7 +42,8 @@ export default function Document() {
     <Html lang="en">
       <Head>
         <script dangerouslySetInnerHTML={{ __html: modeScript }} />
-        <script language="javascript" src="/js/smartlook.js" async/>
+        <GoogleTag></GoogleTag>
+        <SmartLook></SmartLook>
       </Head>
       <body className="bg-white antialiased dark:bg-zinc-900">
         <Main />
