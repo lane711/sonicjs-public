@@ -5,12 +5,11 @@ export function GoogleTag(props) {
     
       gtag('config', '${process.env.GOOGLE_ANALYTICS}');
     `
+  const link = `https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_ANALYTICS}`
+
   return (
     <>
-      <script
-        async
-        src="https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_ANALYTICS}"
-      ></script>
+      <script async src={link}></script>
       <script dangerouslySetInnerHTML={{ __html: code }} />
     </>
   )
