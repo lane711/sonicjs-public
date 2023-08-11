@@ -200,7 +200,7 @@ export const navigation = [
     title: 'Docs',
     links: [
       { title: 'Getting Started', href: '/getting-started' },
-      { title: 'Persistence', href: '/persistence' },
+      { title: 'Persistance', href: '/persistance' },
     ],
   },
   {

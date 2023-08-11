@@ -1,7 +1,7 @@
 export const description =
   'On this page, we’ll dive into tables - how to manage your data schema.'
 
-# Persistence
+# Persistance
 
 SonicJs uses 3 layers of data persistence data:
 
@@ -11,7 +11,7 @@ SonicJs uses 3 layers of data persistence data:
 
 ## Why 3 Datastores?
 
-SonicJs is all about low latency data delivery. If the client is requesting a single record we use KV to retrieve it, since its the fastest way to deliver the content
+SonicJs is all about low latency data delivery. If the client is requesting a single record and its not already cached in that region, then we use KV to retrieve it, since its the fastest way to deliver the content
 to the client.
 
 However, if the client is requests is anything other than a single record, for example:
@@ -49,6 +49,9 @@ Here is the sequence of events that SonicJs uses to determine where to retrieve 
 
 
 ## Accessing D1 SQL Data
+
+If you're just getting started with SonicJs, you don't need to worry much about the caching as it works out of the box. All of your data modeling activities will be focused around creating tables
+and their relationships using Cloudflare's D1 data, a SQLite based cloud database.
 
 SonicJs uses <a target="_blank" href="https://orm.drizzle.team/docs/quick-start">Drizzle</a>, a popular open source ORM that lets you write plain
 SQL or use the API if you prefer. Here are a couple of examples:
@@ -122,3 +125,48 @@ export const postsRelations = relations(posts, ({ one }) => ({
 
 Note that we're using a standard set of audit fields for our tables so that we don't have to copy/paste the fields in the auditSchema object for every table. This is 
 completely optional.
+
+## Migrations
+
+SonicJs also uses Drizzles's built in support for database migrations and we've set it up to work out of the box with Cloudflare D1 (SQLite).
+
+After making a change to your schema file (`/src/db/schema.ts`) you need to run the following command to generate the migration file:
+
+```text
+npm run generate
+```
+
+This will create a uniquely named migration file in the `./migrations` folder. An example migration file will look something like this:
+```js
+CREATE TABLE `categories` (
+	`id` text PRIMARY KEY NOT NULL,
+	`title` text,
+	`body` text,
+	`created_on` integer,
+	`updated_on` integer
+);
+--> statement-breakpoint
+CREATE TABLE `comments` (
+	`id` text PRIMARY KEY NOT NULL,
+	`body` text,
+	`user_id` text,
+	`post_id` integer,
+	`created_on` integer,
+	`updated_on` integer
+);
+...
+```
+
+Its also a good idea to manually review the migration file to make sure it is making the intended updates to you database before running it against your database.
+
+To run the migration against your local development database:
+
+```text
+npm run up
+```
+
+And when you are ready to update your production database (in the Cloudflare Cloud):
+
+```text
+npm run up:prod
+```
