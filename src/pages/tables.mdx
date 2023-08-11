@@ -3,12 +3,13 @@ export const description =
 
 # Tables
 
-SonicJs uses 2 of different Cloudflare products to persist data:
+SonicJs uses 3 different layers of data persistsnce:
 
+1. Cache (In-Memory)
 1. KV (Key-Value pair store)
 1. D1 (A SQLite SQL database)
 
-## Why 2 Datastores?
+## Why 3 Datastores?
 
 SonicJs is all about low latency data delivery. If the client is requesting a single record we use KV to retrieve it, since its the fastest way to deliver the content
 to the client.
