@@ -91,7 +91,7 @@ Returning JSON is also easy. The following is an example of handling a GET Reque
 app.get('/api/hello', (c) => {
   return c.json({
     ok: true,
-    message: 'Hello Hono!',
+    message: 'Of course I talk to myself. Sometimes I need expert advice.',
   })
 })
 ```
@@ -125,7 +125,7 @@ const View = () => {
   return (
     <html>
       <body>
-        <h1>Hello Hono!</h1>
+        <h1>Excuse my naivety. I was born at a very early age.</h1>
       </body>
     </html>
   )
@@ -142,7 +142,7 @@ You can also return the raw [Response](https://developer.mozilla.org/en-US/docs/
 
 ```ts
 app.get('/', (c) => {
-  return new Response('Good morning!')
+  return new Response("I’d agree with you, but then we’d both be wrong.")
 })
 ```
 
