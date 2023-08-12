@@ -8,15 +8,7 @@ support CRUD (Create - Read - Update - Delete) operations on you database tables
 
 In order to create custom routes with custom business rules, we use SonicJs's routing system. 
 
-If you are already familiar with Node/Express, you'll be right at home and the concepts and syntax are very similar. Let's checkout a simple example:
-
-```js
-router.get("/ping", (ctx) => {
-  return ctx.text(Date());
-});
-```
-
-Let's do the same thing but returning a json string:
+If you are already familiar with Node/Express, you'll be right at home as the concepts and syntax are very similar. Let's checkout a simple example:
 
 ```js
 router.get("/ping", (ctx) => {
@@ -30,3 +22,170 @@ including (you guessed it!) Cloudflare Workers.
 So technically, SonicJs will run on anything that HonoJs runs on (Cloudflare Workers, Fastly Compute@Edge, Deno, Bun, Vercel, Lagon, 
 AWS Lambda, Lambda@Edge, and Node.js). However, since we're obsessed with 🔥 speed 🔥, we're putting all focus on deploying to Cloudflare exclusively 
 while the other providers play catch-up.
+
+## Hello World
+
+Write your first custom set of routes in `/src/custom/hello.ts`. 
+
+```ts
+import { Hono } from 'hono'
+
+const app = new Hono()
+
+app.get('/', (c) => {
+  return c.text('Hello Hono!')
+})
+
+export default app
+```
+
+Next all we need to do it import our new hello router into our main server, so let's update `src/server.ts` and 
+add the 2 lines marked with `// <--- add this line`:
+
+```ts
+import { Hono } from "hono";
+
+import { api } from "./cms/api/api";
+import { Bindings } from "./cms/types/bindings";
+import { admin } from "./cms/admin/admin";
+import { content } from "./cms/api/content";
+import { hello } from "./cms/api/hello"; // <--- add this line
+
+
+const app = new Hono<{ Bindings: Bindings }>()
+
+app.get("/", async (ctx) => {
+  return ctx.redirect('/admin');
+});
+
+app.get("/binding", async (ctx) => {
+  return ctx.json(ctx.env.KVDATA,);
+});
+
+app.get("/public/*", async (ctx) => {
+  return await ctx.env.ASSETS.fetch(ctx.req.raw);
+});
+
+app.route('/v1', api)
+app.route('/v1/content', content)
+app.route('/admin', admin)
+app.route('/hello', hello)  // <--- add this line
+
+
+export default app;
+
+```
+
+Startup the app with `npm run dev` and visit:
+
+`http://localhost:8788/v1/hello`
+
+Easy Peasy right! To continue, make sure you've ⭐⭐⭐⭐⭐ <a href="https://github.com/lane711/sonicjs" target="_blank">starred the repo on Github</a> 🙏. Here 
+at SonicJs we work for stars my friend 🤩.
+
+## Return JSON
+
+Returning JSON is also easy. The following is an example of handling a GET Request to `/v1/hello` and returning an `application/json` Response. Don't forget to write `return`. But that's all.
+
+```ts
+app.get('/api/hello', (c) => {
+  return c.json({
+    ok: true,
+    message: 'Hello Hono!',
+  })
+})
+```
+
+## Request and Response
+
+Getting a path parameter, URL query value, and appending Response header is written as follows.
+
+```ts
+app.get('/posts/:id', (c) => {
+  const page = c.req.query('page')
+  const id = c.req.param('id')
+  c.header('X-Message', 'Hi!')
+  return c.text(`You want see ${page} of ${id}`)
+})
+```
+
+We can easily handle POST, PUT, and DELETE not only GET.
+
+```ts
+app.post('/posts', (c) => c.text('Created!', 201))
+app.delete('/posts/:id', (c) => c.text(`${c.req.param('id')} is deleted!`))
+```
+
+## Return HTML
+
+Hono is also suitable for returning a little HTML. Rename the file to `src/index.tsx` and configure it to use JSX (check with each runtime as it is different). You don't need to use a fat front-end framework.
+
+```tsx
+const View = () => {
+  return (
+    <html>
+      <body>
+        <h1>Hello Hono!</h1>
+      </body>
+    </html>
+  )
+}
+
+app.get('/page', (c) => {
+  return c.html(<View />)
+})
+```
+
+## Return raw Response
+
+You can also return the raw [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response).
+
+```ts
+app.get('/', (c) => {
+  return new Response('Good morning!')
+})
+```
+
+## Using Middleware
+
+Middleware can do the hard work for you.
+For example, add the Basic Authentication.
+
+```ts
+import { basicAuth } from 'hono/basic-auth'
+
+// ...
+
+app.use(
+  '/admin/*',
+  basicAuth({
+    username: 'admin',
+    password: 'secret',
+  })
+)
+
+app.get('/admin', (c) => {
+  return c.text('Your are authorized!')
+})
+```
+
+There are useful built-in middleware including Bearer and authentication using JWT, CORS and ETag.
+Also, we have third-party middleware using external libraries such as GraphQL Server and Firebase Auth.
+And, you can make your own middleware.
+
+## Adapter
+
+There are Adapters for platform-dependent functions, e.g., handling static files.
+For example, to handle static files in Cloudflare Workers, import `hono/cloudflare-workers`.
+
+```ts
+import { serveStatic } from 'hono/cloudflare-workers'
+
+app.get('/static/*', serveStatic({ root: './' }))
+```
+
+## Next steps
+
+Most code will work on any platform, but there are tips for each.
+For instance, how to set up projects or how to deploy.
+Please see the page for the platform you want to use and create your application!
