@@ -201,6 +201,8 @@ export const navigation = [
     links: [
       { title: 'Getting Started', href: '/getting-started' },
       { title: 'Persistance', href: '/persistance' },
+      { title: 'Admin UI', href: '/admin-ui' },
+      { title: 'Routing', href: '/routing' },
     ],
   },
   {

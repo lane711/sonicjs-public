@@ -1,0 +1,32 @@
+export const description =
+  'On this page, we’ll dive into all things routing - how to manage your api endpoints urls'
+
+# Routing
+
+As you probably noticed from visiting the API page in the admin UI (http://localhost:8788/admin/api), there are many automatically generated endpoints that 
+support CRUD (Create - Read - Update - Delete) operations on you database tables.
+
+In order to create custom routes with custom business rules, we use SonicJs's routing system. 
+
+If you are already familiar with Node/Express, you'll be right at home and the concepts and syntax are very similar. Let's checkout a simple example:
+
+```js
+router.get("/ping", (ctx) => {
+  return ctx.text(Date());
+});
+```
+
+Let's do the same thing but returning a json string:
+
+```js
+router.get("/ping", (ctx) => {
+  return ctx.json({'date': Date()});
+});
+```
+
+SonicJs uses [HonoJs](https://github.com/honojs/hono) for its requests routing, a lightweight, ultra-fast web framework that supports various edge platforms
+including (you guessed it!) Cloudflare Workers.
+
+So technically, SonicJs will run on anything that HonoJs runs on (Cloudflare Workers, Fastly Compute@Edge, Deno, Bun, Vercel, Lagon, 
+AWS Lambda, Lambda@Edge, and Node.js). However, since we're obsessed with 🔥 speed 🔥, we're putting all focus on deploying to Cloudflare exclusively 
+while the other providers play catch-up.
