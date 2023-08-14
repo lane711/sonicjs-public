@@ -1,7 +1,7 @@
 export const description =
   "SonicJs' data access guide enables you to manage your data using the built in support for cache, KV, and D1"
 
-# Data Accessing
+# Data Access
 
 Once you have defined your [data schema](/persistance#schema) and [routing](/routing), you'll want to be able to manage your data.
 
@@ -12,7 +12,8 @@ With SonicJs you can use the built in data access tier or interact directly with
 
 It is recommend that you use the built in data-tier in order to get the benefits of caching, however this may not be suitable for all use-cases.
 
-Here is a basic example below. This file is also loctied in the repo here:
+# Get
+Here is a basic example below. This file is also located in the repo here:
 
 `src/custom/example.ts`
 
@@ -29,7 +30,7 @@ example.get("/", (ctx) => {
 
 example.get("/users", async (ctx) => {
     var params = qs.parse(ctx.req.query());
-    const data = await getData(ctx.env.D1DATA, ctx.env.KVDATA, 'users', params,ctx.req.url, 'fastest' );
+    const data = await getData(ctx.env.D1DATA, ctx.env.KVDATA, 'users', params, ctx.req.url, 'fastest' );
     return ctx.json(data);
   });
 
@@ -39,3 +40,26 @@ export { example };
   Note: you will need to prefix your example route with `v1` because of how its setup in `src/server.ts`, so to access your users example:
 
   `http://localhost:8788/v1/example/users`
+
+Let's take a closer look at a couple of the line above:
+  ```ts
+    var params = qs.parse(ctx.req.query());
+  ```
+
+  This simply converts the urls parameters into an object using the [qs plugin](https://github.com/ljharb/qs).
+
+    ```ts
+    const data = await getData(ctx.env.D1DATA, ctx.env.KVDATA, 'users', params, ctx.req.url, 'fastest' );
+  ```
+
+  Here, we're provided the D1DATA & KVDATA context object to the `getData` method so that it can determine which source it should use 
+  to lookup the data. 
+
+  We pass in 'users' to indicate that we want to lookup data in the users table.
+  
+  We're then passing in the `params` from the url that will typically contain limits, offsets, filters etc. See the [table api](/table-api#example-list-users-table-records)
+  for full details.
+
+  We also pass in the `url`. SonicJs uses the url as a key when setting the [cache](/persistance#caching-in-memory-and-kv-cache).
+
+  Lastly, we pass in `fastest` which indicates that we want the data to be pulled from whatever method is the fastest.
