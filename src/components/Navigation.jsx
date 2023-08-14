@@ -203,6 +203,8 @@ export const navigation = [
       { title: 'Persistance', href: '/persistance' },
       { title: 'Admin UI', href: '/admin-ui' },
       { title: 'Routing', href: '/routing' },
+      { title: 'Data Access', href: '/data-access' },
+      { title: 'Core Dev Guide', href: '/core-developers-guide' },
     ],
   },
   {

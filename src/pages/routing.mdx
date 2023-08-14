@@ -33,7 +33,7 @@ import { Hono } from 'hono'
 const app = new Hono()
 
 app.get('/', (c) => {
-  return c.text('Hello Hono!')
+  return c.text('Hello SonicJs!')
 })
 
 export default app
@@ -85,7 +85,7 @@ at SonicJs we work for stars my friend 🤩.
 
 ## Return JSON
 
-Returning JSON is also easy. The following is an example of handling a GET Request to `/v1/hello` and returning an `application/json` Response. Don't forget to write `return`. But that's all.
+Returning JSON is also easy. The following is an example of handling a GET Request to `/v1/hello` and returning an `application/json` Response. Don't forget to write `return`.
 
 ```ts
 app.get('/api/hello', (c) => {
@@ -98,7 +98,7 @@ app.get('/api/hello', (c) => {
 
 ## Request and Response
 
-Getting a path parameter, URL query value, and appending Response header is written as follows.
+Getting a path parameter, URL query value, and appending Response header:
 
 ```ts
 app.get('/posts/:id', (c) => {
@@ -109,7 +109,7 @@ app.get('/posts/:id', (c) => {
 })
 ```
 
-We can easily handle POST, PUT, and DELETE not only GET.
+We can of course also handle POST, PUT, and DELETE:
 
 ```ts
 app.post('/posts', (c) => c.text('Created!', 201))
@@ -118,7 +118,8 @@ app.delete('/posts/:id', (c) => c.text(`${c.req.param('id')} is deleted!`))
 
 ## Return HTML
 
-Hono is also suitable for returning a little HTML. Rename the file to `src/index.tsx` and configure it to use JSX (check with each runtime as it is different). You don't need to use a fat front-end framework.
+SonicJs is also suitable for returning HTML. This is how the admin section available at `http://localhost:8788/admin` is generated. You can return any html you want, but in the case of the admin section,
+we use React SSR. More info on that in the [core developers guide](core-developers-guide).
 
 ```tsx
 const View = () => {
@@ -148,8 +149,9 @@ app.get('/', (c) => {
 
 ## Using Middleware
 
-Middleware can do the hard work for you.
-For example, add the Basic Authentication.
+Middleware functions are functions that have access to the request object (req), the response object (res), and the next middleware function in the application’s request-response cycle. 
+
+For example, add the Basic Authentication:
 
 ```ts
 import { basicAuth } from 'hono/basic-auth'
@@ -171,7 +173,7 @@ app.get('/admin', (c) => {
 
 There are useful built-in middleware including Bearer and authentication using JWT, CORS and ETag.
 Also, we have third-party middleware using external libraries such as GraphQL Server and Firebase Auth.
-And, you can make your own middleware.
+Additional, you can create your own middleware functions.
 
 ## Adapter
 
@@ -185,7 +187,3 @@ app.get('/static/*', serveStatic({ root: './' }))
 ```
 
 ## Next steps
-
-Most code will work on any platform, but there are tips for each.
-For instance, how to set up projects or how to deploy.
-Please see the page for the platform you want to use and create your application!
