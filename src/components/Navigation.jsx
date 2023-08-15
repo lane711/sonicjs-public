@@ -204,6 +204,7 @@ export const navigation = [
       { title: 'Admin UI', href: '/admin-ui' },
       { title: 'Routing', href: '/routing' },
       { title: 'Data Access', href: '/data-access' },
+      { title: 'Deploy', href: '/deploy' },
       { title: 'Core Dev Guide', href: '/core-developers-guide' },
     ],
   },

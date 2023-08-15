@@ -1,0 +1,38 @@
+export const description =
+  "SonicJs' deployment guide"
+
+# Deploy
+
+You'd think deploying your code and database to over 200 global server nodes would be headache, but nada nada tostada...
+
+...its as simple as running a couple of commands.
+
+## Update your production database
+
+```cmd
+npm run up:prod
+```
+
+This will update your production database to be in sync with your latest [schema](/persistance#schema). Of course, if you haven't 
+make any schema updates, you can skip this step.
+
+```cmd
+npm run deploy
+```
+
+Deployment generally takes less than 10 seconds (deployments are incremental and therefore super-fast) and you'll get output similar to:
+
+```cmd
+🌏  Uploading... (9/9)
+
+✨ Success! Uploaded 1 files (8 already uploaded) (2.73 sec)
+
+✨ Compiled Worker successfully
+✨ Uploading Worker bundle
+✨ Deployment complete! Take a peek over at https://1d9cc497a.sonicjs.pages.dev
+```
+
+Ahhh yeah!!
+
+If you haven't already, join us on [Discord](https://discord.gg/8bMy6bv3sZ). We'd love to know how you're using SonicJs as well as 
+get any feedback on how we can make it better and of course even FASTER!
