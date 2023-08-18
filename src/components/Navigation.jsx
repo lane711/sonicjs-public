@@ -200,7 +200,7 @@ export const navigation = [
     title: 'Docs',
     links: [
       { title: 'Getting Started', href: '/getting-started' },
-      { title: 'persistence', href: '/persistence' },
+      { title: 'Persistence', href: '/persistence' },
       { title: 'Admin UI', href: '/admin-ui' },
       { title: 'Routing', href: '/routing' },
       { title: 'Data Access', href: '/data-access' },
