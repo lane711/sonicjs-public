@@ -3,12 +3,12 @@ export const description =
 
 # Data Access
 
-Once you have defined your [data schema](/persistance#schema) and [routing](/routing), you'll want to be able to manage your data.
+Once you have defined your [data schema](/persistence#schema) and [routing](/routing), you'll want to be able to manage your data.
 
-With SonicJs you can use the built in data access tier or interact directly with the 3 layers of data persistance:
-1. [Cache (In-Memory)](/persistance#caching-in-memory-and-kv-cache)
-1. [KV (Key-Value pair store)](/persistance#caching-in-memory-and-kv-cache)
-1. [D1 (A SQLite SQL database)](/persistance#accessing-d1-sql-data)
+With SonicJs you can use the built in data access tier or interact directly with the 3 layers of data persistence:
+1. [Cache (In-Memory)](/persistence#caching-in-memory-and-kv-cache)
+1. [KV (Key-Value pair store)](/persistence#caching-in-memory-and-kv-cache)
+1. [D1 (A SQLite SQL database)](/persistence#accessing-d1-sql-data)
 
 It is recommend that you use the built in data-tier in order to get the benefits of caching, however this may not be suitable for all use-cases.
 
@@ -60,7 +60,7 @@ Let's take a closer look at a couple of the line above:
   We're then passing in the `params` from the url that will typically contain limits, offsets, filters etc. See the [table api](/table-api#example-list-users-table-records)
   for full details.
 
-  We also pass in the `url`. SonicJs uses the url as a key when setting the [cache](/persistance#caching-in-memory-and-kv-cache).
+  We also pass in the `url`. SonicJs uses the url as a key when setting the [cache](/persistence#caching-in-memory-and-kv-cache).
 
   Lastly, we pass in `fastest` which indicates that we want the data to be pulled from whatever method is the fastest.
 
