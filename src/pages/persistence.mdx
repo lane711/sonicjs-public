@@ -41,7 +41,8 @@ Here is the sequence of events that SonicJs uses to determine where to retrieve 
     1. If yes, return the data from the cache (this is the fastest way to return the results). This is location dependent, so it will only return results when someone else in the same region has previously made the same request.
     1. If no, processed to step #2.
 1. Are the results already in the KV-based cache?
-    1. If yes, return the data from the KV cache (this is the second fastest way to return the results). This is location dependent, so it will only return results when someone else in the same region has previously made the same request.
+    1. If yes, return the data from the KV cache (this is the second fastest way to return the results). This is location dependent yet the cache will be valid
+    if any user anywhere in the world has made the same request due to 3.2 below!
     1. If no, processed to step #3.
 1. SonicJs will return the data from Cloudflare D1 database (a SQLite databases).
     1. SonicJs will then cache the data in the in-memory cache using the full url as the cache key. This cache will be confined to the current node, so it will only be called upon by requests coming from the same region.
