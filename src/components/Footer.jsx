@@ -187,7 +187,7 @@ function DiscordIcon(props) {
 
 function SocialLink({ href, icon: Icon, children }) {
   return (
-    <Link href={href} className="group">
+    <Link href={href} target="_blank" className="group">
       <span className="sr-only">{children}</span>
       <Icon className="h-5 w-5 fill-zinc-700 transition group-hover:fill-zinc-900 dark:group-hover:fill-zinc-500" />
     </Link>
@@ -201,13 +201,16 @@ function SmallPrint() {
         &copy; SonicJs {new Date().getFullYear()}. All rights reserved.
       </p>
       <div className="flex gap-4">
-        {/* <SocialLink href="#" icon={TwitterIcon}>
-          Follow us on Twitter
-        </SocialLink> */}
         <SocialLink href="https://github.com/lane711/sonicjs" icon={GitHubIcon}>
           Follow us on GitHub
         </SocialLink>
         <SocialLink href="https://discord.gg/8bMy6bv3sZ" icon={DiscordIcon}>
+          Join our Discord server
+        </SocialLink>
+        <SocialLink
+          href="https://twitter.com/SonicJsHeadless"
+          icon={TwitterIcon}
+        >
           Join our Discord server
         </SocialLink>
       </div>
