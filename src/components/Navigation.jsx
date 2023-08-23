@@ -120,6 +120,16 @@ function NavigationGroup({ group, className }) {
 
   return (
     <li className={clsx('relative mt-6', className)}>
+      {group.title === 'Guides' && (
+        <motion.h2
+          layout="position"
+          className="text-xs font-semibold text-zinc-900 dark:text-white"
+        >
+          <a target="_blank" href="https://github.com/lane711/sonicjs">
+           🙏 Star ⭐ us on Github ↗️ 
+          </a>
+        </motion.h2>
+      )}
       <motion.h2
         layout="position"
         className="text-xs font-semibold text-zinc-900 dark:text-white"
@@ -213,7 +223,7 @@ export const navigation = [
     links: [
       // { title: 'Overview', href: '/api-overview' },
       { title: 'Table', href: '/table-api' },
-      { title: 'Record', href: '/record-api' }
+      { title: 'Record', href: '/record-api' },
     ],
   },
 ]
@@ -222,9 +232,9 @@ export function Navigation(props) {
   return (
     <nav {...props}>
       <ul role="list">
-        <TopLevelNavItem href="/">API</TopLevelNavItem>
+        {/* <TopLevelNavItem href="/">API</TopLevelNavItem>
         <TopLevelNavItem href="#">Documentation</TopLevelNavItem>
-        <TopLevelNavItem href="#">Support</TopLevelNavItem>
+        <TopLevelNavItem href="#">Support</TopLevelNavItem> */}
         {navigation.map((group, groupIndex) => (
           <NavigationGroup
             key={group.title}
