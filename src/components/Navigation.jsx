@@ -125,7 +125,7 @@ function NavigationGroup({ group, className }) {
           layout="position"
           className="text-xs font-semibold text-zinc-900 dark:text-white"
         >
-          <a target="_blank" href="https://github.com/lane711/sonicjs">
+          <a target="_blank" rel="noreferrer" href="https://github.com/lane711/sonicjs">
            🙏 Star ⭐ us on Github ↗️ 
           </a>
         </motion.h2>
