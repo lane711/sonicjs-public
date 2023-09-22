@@ -3,29 +3,36 @@ export const description =
 
 # Tables API
 
-SonicJs automatically generates CRUD based API endpoints for each table defined in your [schema](/tables#schema). It does this without generating code (a good thing!) and 
+SonicJs automatically generates CRUD based API endpoints for each table defined in your [schema](/tables#schema). It does this without generating code (a good thing!) and
 can be easily extended or modified based on your needs. {{ className: 'lead' }}
 
 This includes the ability to:
+
 1. Get a list of records.
-   * Records can optionally filtered
-   * Records can optionally be sorted
-   * Records can optionally be paged 
+   - Records can optionally filtered
+   - Records can optionally be sorted
+   - Records can optionally be paged
 1. Get an individual record by id
 1. Post to create new record
 1. Put to updated an existing record
 1. Delete to remove an existing record
 
-
 ## The Users table
 
-For our examples below, we'll use the  `users` table defined here: `/src/db/schema.ts`, however the API is dynamic based on your custom 
+For our examples below, we'll use the `users` table defined here: `/src/db/schema.ts`, however the API is dynamic based on your custom
 defined [schema](/tables#schema), so all of the below endpoints are created for each table in the schema.
 
 There is an admin page in the SonicJs UI that will list out the generated APIs for your reference:
-<a target="_blank" href="http://127.0.0.1:8788/admin/api">http://127.0.0.1:8788/admin/api</a>
+
+<p>
+<a target="_blank" href="http://127.0.0.1:8788/admin/api">
+  http://127.0.0.1:8788/admin/api
+</a>
+</p>
+
 
 ---
+
 ## List table records {{ tag: 'GET', label: '/v1/:tableName' }}
 
 ---
@@ -67,10 +74,11 @@ There is an admin page in the SonicJs UI that will list out the generated APIs f
     ```bash {{ title: 'cURL' }}
 
 http://localhost:8788/v1/content
-```
+
+````
 </CodeGroup>
 
-    ```json {{ title: 'Response' }}
+    ```json {{ title: 'Response (200)' }}
 [
       {
         "id": "9d370085-c116-47c9-9b22-7f33061ec7b1",
@@ -89,7 +97,7 @@ http://localhost:8788/v1/content
         "updated_on": 1689293023190
       },
 ]
-```
+````
 
   </Col>
 </Row>
@@ -110,7 +118,7 @@ http://localhost:8788/v1/content
         The id of the record to be returned.
       </Property>
       <Property name="includeRelations" type="boolean">
-        Comming soon. This will allow you to retrieve the records related data. 
+        Comming soon. This will allow you to retrieve the records related data.
       </Property>
     </Properties>
 
@@ -121,10 +129,11 @@ http://localhost:8788/v1/content
     ```bash {{ title: 'cURL' }}
 
 http://localhost:8788/v1/users/9d370085-c116-47c9-9b22-7f33061ec7b1
-```
+
+````
 </CodeGroup>
 
-    ```json {{ title: 'Response' }}
+    ```json {{ title: 'Response (200)' }}
     {
       "id": "9d370085-c116-47c9-9b22-7f33061ec7b1",
       "name": "John",
@@ -133,7 +142,7 @@ http://localhost:8788/v1/users/9d370085-c116-47c9-9b22-7f33061ec7b1
       "created_on": 1688780261122,
       "updated_on": 1688780261122
     }
-```
+````
 
   </Col>
 </Row>
@@ -152,6 +161,7 @@ http://localhost:8788/v1/users/9d370085-c116-47c9-9b22-7f33061ec7b1
     ### Required attributes
 
     <Properties>
+
   <Property name="data" type="string">
     The Json string containing the content data. This can include all or just some of the fields in your table. It must however included
     any required (not null) fields.
@@ -163,29 +173,29 @@ http://localhost:8788/v1/users/9d370085-c116-47c9-9b22-7f33061ec7b1
 
     <CodeGroup title="Request" tag="POST" label="/v1/users">
 
-    ```json {{ title: 'body' }}
+```json {{ title: 'body' }}
 {
-      "data":
-        {
-          "name": "John",
-          "email": "john@somewhere.com",
-          "role": "admin"
-        }
-  }
-```
+  "data":
+    {
+      "name": "John",
+      "email": "john@somewhere.com",
+      "role": "admin"
+    }
+}
+````
 
     </CodeGroup>
 
-    ```json {{ title: 'Response' }}
-        {
-          "id": "9d370085-c116-47c9-9b22-7f33061ec7b9",
-          "name": "John",
-          "email": "john@somewhere.com",
-          "role": "admin",
-          "created_on": 1688780261122,
-          "updated_on": 1688780261122
-        }
-    ```
+```json {{ title: 'Response (201)' }}
+{
+  "id": "9d370085-c116-47c9-9b22-7f33061ec7b9",
+  "name": "John",
+  "email": "john@somewhere.com",
+  "role": "admin",
+  "created_on": 1688780261122,
+  "updated_on": 1688780261122
+}
+```
 
   </Col>
 </Row>
@@ -204,6 +214,9 @@ http://localhost:8788/v1/users/9d370085-c116-47c9-9b22-7f33061ec7b1
     ### Required attributes
 
     <Properties>
+      <Property name="id" type="string">
+The ID on the record that you want to update (supplied in the url)  
+</Property>
   <Property name="data" type="string">
     The Json string containing the content data. This can include all or just some of the fields in your table.
   </Property>
@@ -221,20 +234,54 @@ http://localhost:8788/v1/users/9d370085-c116-47c9-9b22-7f33061ec7b1
           "email": "updated@somewhere.com",
         }
   }
-```
+````
 
     </CodeGroup>
 
-    ```json {{ title: 'Response' }}
-        {
-          "id": "9d370085-c116-47c9-9b22-7f33061ec7b9",
-          "name": "John",
-          "email": "updated@somewhere.com",
-          "role": "admin",
-          "created_on": 1688780261122,
-          "updated_on": 1688780264355
-        }
+```json {{ title: 'Response (200)' }}
+{
+  "id": "9d370085-c116-47c9-9b22-7f33061ec7b9",
+  "name": "John",
+  "email": "updated@somewhere.com",
+  "role": "admin",
+  "created_on": 1688780261122,
+  "updated_on": 1688780264355
+}
+```
+
+  </Col>
+</Row>
+
+## Delete content {{ tag: 'DELETE', label: '/v1/user/9d370085-c116-47c9-9b22-7f33061ec7b9' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to delete existing records.
+
+    ### Required attributes
+
+    <Properties>
+  <Property name="id" type="string">
+The ID on the record that you want to delete 
+ </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="DELETE" label="/v1/users/9d370085-c116-47c9-9b22-7f33061ec7b9">
+
+    ```json {{ title: 'body' }}
+
+````
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response (204)' }}
+
     ```
 
   </Col>
 </Row>
+
