@@ -1,11 +1,11 @@
-export const description =
-  "SonicJs' deployment guide"
+export const description = "SonicJs' deployment guide"
 
-# Deploy
+# Deploy (via command line)
 
-You'd think deploying your code and database to over 200 global server nodes would be headache, but nada nada tostada...
+You'd think deploying your code and database to over 200 global server nodes would be a headache, however its as simple as running a couple of commands.
 
-...its as simple as running a couple of commands.
+Deploying via the command line is great for early development and doing proof of concepts. However, if you need more flexibility such as setting up SonicJs
+on multiple environments, automated deployments, custom domain name, etc, please the Deploying via the Cloudflare UI section below.
 
 ## Update your production database
 
@@ -13,8 +13,8 @@ You'd think deploying your code and database to over 200 global server nodes wou
 npm run up:prod
 ```
 
-This will update your production database to be in sync with your latest [schema](/persistence#schema). Of course, if you haven't 
-make any schema updates, you can skip this step.
+This will update your production database to be in sync with your latest [schema](/persistence#schema). Of course, if you haven't
+made any schema updates, you can skip this step.
 
 ## Run the deploy command
 
@@ -34,7 +34,82 @@ Deployment generally takes less than 10 seconds (deployments are incremental and
 ✨ Deployment complete! Take a peek over at https://1d9cc497a.sonicjs.pages.dev
 ```
 
-Ahhh yeah!!
+Ahhh yeah!! You can now click on the link supplied by the cli to instantly preview your app running on Cloudflare.
 
-If you haven't already, join us on [Discord](https://discord.gg/8bMy6bv3sZ). We'd love to know how you're using SonicJs as well as 
+If you haven't already, join us on [Discord](https://discord.gg/8bMy6bv3sZ). We'd love to know how you're using SonicJs as well as
 get any feedback on how we can make it better and of course even FASTER!
+
+# Deploy (via the Cloudflare UI)
+
+Deploying your SonicJs Headless CMS with the Cloudflare UI provides you with the ability to:
+1. Setup multiple environments (ie: preview and production)
+1. Setup automatic deployments so that your app is deployed on code commit
+1. Setup environment variables and binding
+1. Setup custom domain name(s)
+1. Manage who can access your Cloudflare deployment
+1. Much more...
+
+## Database Deployment
+
+The first thing we'll want to do is upgrade our production database schema. To do this simply run the command:
+
+```cmd
+npm run up:prod
+```
+
+That should be all you need to do, but if you run into issues or want more details, please see the full [migrations](/persistence#migrations) section. Note that 
+you can skip this steps if you haven't made any [schema](/persistence#schema) updates.
+
+## Code Deployment
+1. Login in to Cloudflare [https://dash.cloudflare.com/](https://dash.cloudflare.com/). You can register for an account for free if you don't already have one.
+1. Select "Workers & Pages" from the left hand navigation.
+1. Click "Create application"
+1. Click the "Pages" tab
+1. Click "Connect to Git"
+1. Select your SonicJs repo from the list, then "Begin setup"
+1. Enter the following details
+   * Framework present - leave as "None"
+   * Build command - "npm run build" without the quotes
+   * Build out directory - "dist"  without the quotes
+1. Click "Save and Deploy"
+
+At this point, Cloudflare will build and deploy your application. However you'll get an error if you visit the provided URL since we haven't setup bindings
+for our KV and D1 data stores. To do that:
+
+1. From you app's main page, navigate to Settings -> Functions
+1. In the KV namespace bindings sections, click "Add binding"
+   1. Variable Name: KVDATA
+   1. KV namespace: [select the KV namespace that you want to use]
+      * If you don't already have a production KV namespace run the command `wrangler kv:namespace create sonicjs` 
+1. In the D1 database bindings section, click "Add binding"
+   1. Variable Name: D!1DATA
+   1. D1 database: [select the D1 database that you want to use]
+      * If you don't already have a production D1 database run the command `wrangler d1 create sonicjs` 
+
+
+Now you should be able to head back over to the browser were your app's url is loaded and refresh the page.
+
+if you see any errors, be sure to check the `/status` url on your deployed app. If all is working you should see
+
+```json
+{
+  "webServer": "ok",
+  "d1": "ok",
+  "drizzle": "ok",
+  "kv": "ok",
+  "env": {
+    "ASSETS": {},
+    "CF_PAGES": "1",
+    "CF_PAGES_BRANCH": "main",
+    "CF_PAGES_COMMIT_SHA": "450099b920e1ea178a5bf0c48619c40d25ecd4ae",
+    "CF_PAGES_URL": "https://2c1d1144.sonicjs-emx.pages.dev",
+    "D1DATA": {
+      "fetcher": {}
+    },
+      "KVDATA": {}
+    }
+}
+```
+
+If you experience any hiccups with this process please don't hesitate to reach out for help on [Discord](https://discord.gg/8bMy6bv3sZ).
+

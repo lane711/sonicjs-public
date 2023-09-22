@@ -6,16 +6,28 @@ export const description =
 SonicJs automatically generates CRUD based API endpoints for each table defined in your [schema](/tables#schema). It does this without generating code (a good thing!) and 
 can be easily extended or modified based on your needs. {{ className: 'lead' }}
 
+This includes the ability to:
+1. Get a list of records.
+   * Records can optionally filtered
+   * Records can optionally be sorted
+   * Records can optionally be paged 
+1. Get an individual record by id
+1. Post to create new record
+1. Put to updated an existing record
+1. Delete to remove an existing record
+
+
 ## The Users table
 
 For our examples below, we'll use the  `users` table defined here: `/src/db/schema.ts`, however the API is dynamic based on your custom 
-defined [schema](/tables#schema).
+defined [schema](/tables#schema), so all of the below endpoints are created for each table in the schema.
 
 There is an admin page in the SonicJs UI that will list out the generated APIs for your reference:
 <a target="_blank" href="http://127.0.0.1:8788/admin/api">http://127.0.0.1:8788/admin/api</a>
 
 ---
 ## List table records {{ tag: 'GET', label: '/v1/:tableName' }}
+
 ---
 
 ## Example: List users table records {{ tag: 'GET', label: '/v1/users' }}
@@ -128,38 +140,36 @@ http://localhost:8788/v1/users/9d370085-c116-47c9-9b22-7f33061ec7b1
 
 ---
 
-## Create/Update content {{ tag: 'POST', label: '/v1/content' }}
+## Create content {{ tag: 'POST', label: '/v1/user' }}
 
 <Row>
   <Col>
 
-    This endpoint allows you to add a new content. It is an upsert, so you can create or update content with the same endpoint.
+    This endpoint allows you to insert new records into your database tables.
+
+    Note that you do not need to supply created_on and updated_on fields as their values are generated automatically by SonicJs.
 
     ### Required attributes
 
     <Properties>
-  <Property name="key" type="string">
-    Unique identifier for the content. Do not include the key property for new content.
-  </Property>
   <Property name="data" type="string">
-    The Json string containing the content data. This can include any shape of
+    The Json string containing the content data. This can include all or just some of the fields in your table. It must however included
+    any required (not null) fields.
   </Property>
     </Properties>
 
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="POST" label="/v1/content">
+    <CodeGroup title="Request" tag="POST" label="/v1/users">
 
     ```json {{ title: 'body' }}
 {
-      "key" :"site1::content::blog::16861809562680000::vbeqmvt",
       "data":
         {
-          "systemId": "blog",
-          "title": "Top 5 Headless CMS of 2023",
-          "body" : "Sed posuere consectetur est...",
-          "publishOn" : "2023-06-29T12:00:00-07:00"
+          "name": "John",
+          "email": "john@somewhere.com",
+          "role": "admin"
         }
   }
 ```
@@ -167,20 +177,64 @@ http://localhost:8788/v1/users/9d370085-c116-47c9-9b22-7f33061ec7b1
     </CodeGroup>
 
     ```json {{ title: 'Response' }}
-    {
-      "id": "xgQQXg3hrtjh7AvZ",
-      "contact_id": "WAz8eIbvDR60rouK",
-      "group_id": null,
-      "pinned_message_id": null,
-      "is_pinned": false,
-      "is_muted": false,
-      "last_active_at": null,
-      "last_opened_at": null,
-      "created_at": 692233200,
-      "archived_at": null
-    }
+        {
+          "id": "9d370085-c116-47c9-9b22-7f33061ec7b9",
+          "name": "John",
+          "email": "john@somewhere.com",
+          "role": "admin",
+          "created_on": 1688780261122,
+          "updated_on": 1688780261122
+        }
     ```
 
   </Col>
 </Row>
 
+## Update content {{ tag: 'PUT', label: '/v1/user/9d370085-c116-47c9-9b22-7f33061ec7b9' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to update existing records.
+
+    You can supply only the fields that are changing, or supply all of them if desired.
+
+    Note that you do not need to supply created_on and updated_on fields as their values are generated automatically by SonicJs.
+
+    ### Required attributes
+
+    <Properties>
+  <Property name="data" type="string">
+    The Json string containing the content data. This can include all or just some of the fields in your table.
+  </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="PUT" label="/v1/users/9d370085-c116-47c9-9b22-7f33061ec7b9">
+
+    ```json {{ title: 'body' }}
+{
+      "data":
+        {
+          "email": "updated@somewhere.com",
+        }
+  }
+```
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+        {
+          "id": "9d370085-c116-47c9-9b22-7f33061ec7b9",
+          "name": "John",
+          "email": "updated@somewhere.com",
+          "role": "admin",
+          "created_on": 1688780261122,
+          "updated_on": 1688780264355
+        }
+    ```
+
+  </Col>
+</Row>
