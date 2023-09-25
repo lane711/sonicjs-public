@@ -123,7 +123,7 @@ function NavigationGroup({ group, className }) {
       {group.title === 'Guides' && (
         <motion.h2
           layout="position"
-          className="text-xs font-semibold text-zinc-900 dark:text-white"
+          className="text-xs font-semibold text-zinc-900 dark:text-white mb-6"
         >
           <a target="_blank" rel="noreferrer" href="https://github.com/lane711/sonicjs">
            🙏 Star ⭐ us on Github ↗️ 
