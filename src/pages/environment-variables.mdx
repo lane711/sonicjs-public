@@ -1,0 +1,32 @@
+export const description =
+  'Environment variables'
+
+# Environment Variables (Local)
+
+In a SonicJs application, environment variables serve as dynamic configuration settings that can be utilized to control various aspects of the application's behavior. These variables are external to the codebase and are set in the operating system or the hosting environment. 
+
+They are particularly useful for storing sensitive information such as API keys, database credentials, or other configuration details that may vary across different deployment environments (e.g., development, testing, production). By utilizing environment variables, SonicJs applications can achieve greater flexibility, security, and portability, as developers can adjust configurations without modifying the source code. 
+
+Environment variable are managed at the BOTTOM of your `/wrangler.toml` file, for example:
+
+```text copy
+// ... other setting above, environment variables go at the bottom
+
+[vars]
+datadog_apikey = 'abc123abc123'
+datadog_service = 'local.sonicjs.com'
+useAuth = 'false'
+```
+
+# Environment Variables (Deployed on Cloudflare)
+
+To add environment variables via the dashboard:
+
+1. Log in to [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+1. Select Workers & Pages.
+1. In Overview, select your Worker > Settings.
+1. Under Environment Variables, select Add variable.
+1. Input a Variable name and its value, which will be made available to your Worker.
+1. (Optional) To add multiple environment variables, select Add variable.
+1. Select Save to implement your changes.
+
