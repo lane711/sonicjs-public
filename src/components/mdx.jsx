@@ -94,23 +94,23 @@ export function Property({ name, type, children }) {
   )
 }
 
-export function BlogList() {
-  return (
-    <ul>
-      <li><a href="/blog/strapi-vs-ghost-vs-sonicjs">A Comparison of Strapi, Ghost, and SonicJS</a></li>
-      <li><a href="/blog/strapi-vs-directus-vs-sonicjs">A Comparison of Strapi, Directus, and SonicJS</a></li>
-    </ul>
-  )
-}
+// export function BlogList() {
+//   return (
+//     <ul>
+//       <li><a href="/blog/strapi-vs-ghost-vs-sonicjs">A Comparison of Strapi, Ghost, and SonicJS</a></li>
+//       <li><a href="/blog/strapi-vs-directus-vs-sonicjs">A Comparison of Strapi, Directus, and SonicJS</a></li>
+//     </ul>
+//   )
+// }
 
 const posts = [
   {
     id: 1,
-    title: 'Boost your conversion rate',
-    href: '#',
+    title: 'A Comparison of Strapi, Ghost, and SonicJs',
+    href: '/blog/strapi-vs-ghost-vs-sonicjs',
     description:
-      'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
-    date: 'Mar 16, 2020',
+      `In today's fast-paced digital world, website performance is paramount. Users expect websites to load instantly and deliver content without delays. As a result, developers are constantly on the lookout for platforms that offer both functionality and speed. In this blog post...`,
+    date: 'Jame 03, 2024',
     datetime: '2020-03-16',
     category: { title: 'Marketing', href: '#' },
     author: {
@@ -122,57 +122,22 @@ const posts = [
     },
   },
   {
-    id: 1,
-    title: 'Boost your conversion rate',
-    href: '#',
+    id: 2,
+    title: 'A Comparison of Strapi, Directus, and SonicJs',
+    href: '/blog/strapi-vs-directus-vs-sonicjs',
     description:
-      'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
-    date: 'Mar 16, 2020',
+      `In today's rapidly evolving digital landscape, businesses and developers are constantly seeking efficient and agile Content Management Systems (CMS) that can deliver top-notch performance. Speed is a critical factor in attracting and retaining users, making it essential to choose a CMS that...`,
+    date: 'Jan 03, 2024',
     datetime: '2020-03-16',
     category: { title: 'Marketing', href: '#' },
     author: {
-      name: 'Michael Foster',
+      name: 'Lane Campbell',
       role: 'Co-Founder / CTO',
       href: '#',
       imageUrl:
         'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
     },
-  },
-  {
-    id: 1,
-    title: 'Boost your conversion rate',
-    href: '#',
-    description:
-      'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
-    date: 'Mar 16, 2020',
-    datetime: '2020-03-16',
-    category: { title: 'Marketing', href: '#' },
-    author: {
-      name: 'Michael Foster',
-      role: 'Co-Founder / CTO',
-      href: '#',
-      imageUrl:
-        'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    },
-  },
-  {
-    id: 1,
-    title: 'Boost your conversion rate',
-    href: '#',
-    description:
-      'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
-    date: 'Mar 16, 2020',
-    datetime: '2020-03-16',
-    category: { title: 'Marketing', href: '#' },
-    author: {
-      name: 'Michael Foster',
-      role: 'Co-Founder / CTO',
-      href: '#',
-      imageUrl:
-        'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    },
-  },
-  // More posts...
+  }
 ]
 
 export function Blog() {
@@ -202,7 +167,7 @@ export function Blog() {
                 </h3>
                 <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">{post.description}</p>
               </div>
-              <div className="relative mt-8 flex items-center gap-x-4">
+              {/* <div className="relative mt-8 flex items-center gap-x-4">
                 <Image
                 width="100"
                 height="100"
@@ -211,7 +176,6 @@ export function Blog() {
                 className="h-10 w-10 rounded-full bg-gray-50"
                 unoptimized
               />
-                {/* <img src={post.author.imageUrl} alt="" className="h-10 w-10 rounded-full bg-gray-50" /> */}
                 <div className="text-sm leading-6">
                   <p className="font-semibold text-gray-900">
                     <a href={post.author.href}>
@@ -221,7 +185,7 @@ export function Blog() {
                   </p>
                   <p className="text-gray-600">{post.author.role}</p>
                 </div>
-              </div>
+              </div> */}
             </article>
           ))}
         </div>
