@@ -71,67 +71,98 @@ const allUsers = await db.select().from(users);
 
 SonicJs uses Drizzle for schema management. You can find the <a target="_blank" href="https://orm.drizzle.team/docs/sql-schema-declaration">full docs here</a>. 
 
-The SonicJs schema can be found here: `/src/db/schema.ts`
+The SonicJs schemas can be found here: `/src/db/schema/`
 
-This schema is essentially a boilerplate/example. It can be fully altered to suite your needs.
+Each table in your database will have one correspending schema file here you define the name, route, fields, and relationships with other tables.
+
+This simple blog schema that is part of the `main` branch is essentially a boilerplate/example. It can be fully altered to suite your needs.
 
 Here 
-is an example of the schema definition for a users and posts tables along with the relationship between them:
+is an example of the schema definition for a users and posts table along with the relationship between them:
 
+`/src/db/schema/users`
 ```js
-import {
-  sqliteTable,
-  text,
-  integer
-} from "drizzle-orm/sqlite-core";
-
+import { sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { relations } from "drizzle-orm";
+import { auditSchema } from "./audit";
+import * as posts from "./posts";
+import * as comments from "./comments";
 
-export const auditSchema = {
-  created_on: integer('created_on'),
-  updated_on: integer('updated_on')
-}
+export const tableName = "users";
 
-export const userSchema = {
+export const route = "users";
+
+export const definition = {
   id: text("id").primaryKey(),
-  name: text("name"),
+  firstName: text("firstName"),
+  lastName: text("lastName"),
   email: text("email"),
   password: text("password"),
   role: text("role").$type<"admin" | "user">(),
-  created_on: integer('created_on'),
-  updated_on: integer('updated_on')
-}
+};
 
-export const users = sqliteTable("users", {...userSchema, ...auditSchema});
+export const table = sqliteTable(tableName, {
+  ...definition,
+  ...auditSchema,
+});
 
-export const usersRelations = relations(users, ({ many }) => ({
-  posts: many(posts),
+export const relation = relations(table, ({ many }) => ({
+  posts: many(posts.table),
+  comments: many(comments.table),
 }));
+```
+`/src/db/schema/posts`
+```js
+import { sqliteTable, index, text } from "drizzle-orm/sqlite-core";
+import { relations } from "drizzle-orm";
+import { auditSchema } from "./audit";
+import * as users from "./users";
+import * as categoriesToPosts from "./categoriesToPosts";
+import * as comments from "./comments";
 
-export const postsSchema = {
+export const tableName = "posts";
+
+export const route = "posts";
+
+export const definition = {
   id: text("id").primaryKey(),
   title: text("title"),
   body: text("body"),
-  userId: text("user_id"),
-}
-export const posts = sqliteTable("posts", {...postsSchema, ...auditSchema});
+  userId: text("userId"),
+};
 
-export const postsRelations = relations(posts, ({ one }) => ({
-  author: one(users, {
-    fields: [posts.userId],
-    references: [users.id],
+export const table = sqliteTable(
+  tableName,
+  {
+    ...definition,
+    ...auditSchema,
+  },
+  (table) => {
+    return {
+      userIdIndex: index("postUserIdIndex").on(table.userId),
+    };
+  }
+);
+
+export const relation = relations(table, ({ one, many }) => ({
+  user: one(users.table, {
+    fields: [table.userId],
+    references: [users.table.id],
   }),
+  categories: many(categoriesToPosts.table),
+  comments: many(comments.table),
 }));
+
 ```
 
-Note that we're using a standard set of audit fields for our tables so that we don't have to copy/paste the fields in the auditSchema object for every table. This is 
+Note that we're using a standard set of audit fields (`auditSchema`) for our tables so that we don't have to copy/paste the fields in the auditSchema object for every table. This is 
 completely optional.
 
 ## Migrations
 
 SonicJs also uses Drizzles's built in support for database migrations and we've set it up to work out of the box with Cloudflare D1 (SQLite).
 
-After making a change to your schema file (`/src/db/schema.ts`) you need to run the following command to generate the migration file:
+After making a change to any of your schema definition files (`/src/db/schema/*.ts`) you need to run the following command to generate the migration file:
 
 ```text
 npm run generate
@@ -165,6 +196,7 @@ To run the migration against your local development database:
 ```text
 npm run up
 ```
+This will update your local D1 (SQLite) database.
 
 And when you are ready to update your production database (in the Cloudflare Cloud):
 
