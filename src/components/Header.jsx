@@ -39,6 +39,13 @@ function TopLevelNavItemNewTab({ href, children }) {
     </li>
   )
 }
+function LinkNewTab({ href, children }) {
+  return (
+    <Link href={href} target="_blank" >
+      <span className="sr-only">{children}</span>
+    </Link>
+  )
+}
 
 function SocialLink({ href, icon: Icon, children }) {
   return (
