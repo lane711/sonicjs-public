@@ -215,6 +215,7 @@ export const navigation = [
       { title: 'Routing', href: '/routing' },
       { title: 'Data Access', href: '/data-access' },
       { title: 'Authentication', href: '/authentication' },
+      { title: 'File Management', href: '/file-management' },
       { title: 'Environment Variables', href: '/environment-variables' },
       { title: 'Deploy', href: '/deploy' },
       { title: 'Core Dev Guide', href: '/core-developers-guide' },
