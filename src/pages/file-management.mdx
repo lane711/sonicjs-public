@@ -72,6 +72,7 @@ In addition to the normal tus api 3 headers should be passed in the request to p
   - sonic-field - the field name of the file e.g. 'image'
   - sonic-mode - should be 'create' if calling manually
 
+
 # Managing files from the Admin UI
 
 The Sonic Backend Admin allows you to manage files for tables that you had added file fields to.
@@ -80,5 +81,12 @@ The UI uses <a target="_blank" href="https://uppy.io/" rel="noopener noreferrer"
 
 ![Headless CMS Upload Image](/images/headless-cms-upload-image.png)
 
-You can also upload multiple files using the `file[]` array type field.
+You can also upload multiple files using the `file[]` array type field. The SonicJs backend UI automatically generates a form that will render a repeating files control, allowing you to 
+manage a list of images, perhaps for a carousel or image rotator.
+
+![Headless CMS Upload Multiple Images](/images/headless-cms-multiple-images.png)
+
+You can also select from all previously uploaded images by using the "Pick Existing" button: 
+
+![Headless CMS Upload Select Existing Images](/images/headless-cms-pick-existing-images.png)
 
