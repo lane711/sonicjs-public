@@ -32,6 +32,7 @@ function TopLevelNavItemNewTab({ href, children }) {
       <Link
         target="_blank"
         href={href}
+        rel="noopener noreferrer"
         className="text-sm leading-5 text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white"
       >
         {children}
@@ -41,7 +42,7 @@ function TopLevelNavItemNewTab({ href, children }) {
 }
 function LinkNewTab({ href, children }) {
   return (
-    <Link href={href} target="_blank" >
+    <Link href={href} target="_blank" rel="noopener noreferrer">
       <span className="sr-only">{children}</span>
     </Link>
   )
@@ -49,7 +50,7 @@ function LinkNewTab({ href, children }) {
 
 function SocialLink({ href, icon: Icon, children }) {
   return (
-    <Link href={href} target="_blank" className="group">
+    <Link href={href} target="_blank" className="group" rel="noopener noreferrer">
       <span className="sr-only">{children}</span>
       <Icon className="h-5 w-5 fill-zinc-700 transition group-hover:fill-zinc-900 dark:group-hover:fill-zinc-500" />
     </Link>
