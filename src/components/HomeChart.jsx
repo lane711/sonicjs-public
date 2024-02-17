@@ -1,36 +1,35 @@
-export function HomeChart(props) {
-    const code = `
-        <script>
-        const ctx = document.getElementById('myChart');
+// App.js
+import Chart from 'chart.js/auto'
+import { CategoryScale } from 'chart.js'
+import { useState } from 'react'
+import { Data } from '../data/homechart'
+import { BarChart } from './HomeChartBar'
 
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                borderWidth: 1
-            }]
-            },
-            options: {
-            scales: {
-                y: {
-                beginAtZero: true
-                }
-            }
-            }
-        });
-        </script>
-      `
-    const link = `https://cdn.jsdelivr.net/npm/chart.js`
-  
-    return (
-      <>
-        <div>home chart</div>
-        <canvas id="myChart"></canvas>
-        <script async src={link}></script>
-        <script dangerouslySetInnerHTML={{ __html: code }} />
-      </>
-    )
-  }
+Chart.register(CategoryScale)
+
+export function HomeChart() {
+  const [chartData, setChartData] = useState({
+    labels: Data.map((data) => data.platform),
+    datasets: [
+      {
+        label: 'Average Request Latency',
+        data: Data.map((data) => data.latency),
+        backgroundColor: [
+          'rgba(75,192,192,1)',
+          '#ecf0f1',
+          '#50AF95',
+          '#f3ba2f',
+          '#2a71d0',
+        ],
+        borderColor: 'black',
+        borderWidth: 2,
+      },
+    ],
+  })
+
+  return (
+    <div className="HomeChart">
+      <BarChart chartData={chartData} />
+    </div>
+  )
+}
