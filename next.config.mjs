@@ -20,7 +20,31 @@ const nextConfig = {
   experimental: {
     scrollRestoration: true,
   },
+  images: {
+    unoptimized: true,
+  },
   output: 'export',
 }
 
 export default withSearch(withMDX(nextConfig))
+
+
+// @ts-check
+ 
+// const { PHASE_DEVELOPMENT_SERVER } = require('next/constants')
+ 
+// module.exports = (phase, { defaultConfig }) => {
+//   if (phase === PHASE_DEVELOPMENT_SERVER) {
+//     return {
+//       /* development only config options here */
+//     }
+//   }
+ 
+//   return {
+//     distDir: 'build',
+//     output: 'export',
+//     images: {
+//       unoptimized: true,
+//     },
+//   }
+// }
