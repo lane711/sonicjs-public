@@ -85,6 +85,10 @@ for our KV and D1 data stores. To do that:
    1. Variable Name: D1DATA
    1. D1 database: [select the D1 database that you want to use]
       * If you don't already have a production D1 database run the command `wrangler d1 create sonicjs` 
+1. (Optional if you want to manage files) In the R2 bucket bindings section, click "Add binding"
+   1. Variable Name: R2STORAGE
+   1. R2 bucket: [select the R2 bucket that you want to use]
+      * If you don't already have a production R2 database run the command `wrangler r2 bucket create sonicjs` 
 1. Redeploy SonicJs so that it has access to your newly created variables.
    1. Navigate to your app's main page.
    1. From the Deployments tab, you should see an "All Deployments" section
