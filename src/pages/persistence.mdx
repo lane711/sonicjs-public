@@ -73,73 +73,49 @@ SonicJs uses Drizzle for schema management. You can find the <a target="_blank" 
 
 The SonicJs schemas can be found here: `/src/db/schema/`
 
-Each table in your database will have one correspending schema file here you define the name, route, fields, and relationships with other tables.
+Each table in your database will have one correspending schema file here you define the name, route, fields, relationships with other tables, and access control (which role can read/update/create/delete).
 
 This simple blog schema that is part of the `main` branch is essentially a boilerplate/example. It can be fully altered to suite your needs.
 
 Here 
-is an example of the schema definition for a users and posts table along with the relationship between them:
+is an example of the schema definition for a posts table along with the relationship between them:
 
-`/src/db/schema/users`
-```js
-import { sqliteTable, text } from "drizzle-orm/sqlite-core";
-import { relations } from "drizzle-orm";
-import { auditSchema } from "./audit";
-import * as posts from "./posts";
-import * as comments from "./comments";
 
-export const tableName = "users";
-
-export const route = "users";
-
-export const definition = {
-  id: text("id").primaryKey(),
-  firstName: text("firstName"),
-  lastName: text("lastName"),
-  email: text("email"),
-  password: text("password"),
-  role: text("role").$type<"admin" | "user">(),
-};
-
-export const table = sqliteTable(tableName, {
-  ...definition,
-  ...auditSchema,
-});
-
-export const relation = relations(table, ({ many }) => ({
-  posts: many(posts.table),
-  comments: many(comments.table),
-}));
-```
 `/src/db/schema/posts`
 ```js
-import { sqliteTable, index, text } from "drizzle-orm/sqlite-core";
-import { relations } from "drizzle-orm";
-import { auditSchema } from "./audit";
-import * as users from "./users";
-import * as categoriesToPosts from "./categoriesToPosts";
-import * as comments from "./comments";
+import { sqliteTable, index, text } from 'drizzle-orm/sqlite-core';
 
-export const tableName = "posts";
+import { relations } from 'drizzle-orm';
+import { auditSchema } from './audit';
+import * as users from './users';
+import * as categoriesToPosts from './categoriesToPosts';
+import * as comments from './comments';
+import { ApiConfig } from '../routes';
+import { isAdmin, isAdminOrEditor } from '../config-helpers';
 
-export const route = "posts";
+export const tableName = 'posts';
+
+export const route = 'posts';
 
 export const definition = {
-  id: text("id").primaryKey(),
-  title: text("title"),
-  body: text("body"),
-  userId: text("userId"),
+  id: text('id').primaryKey(),
+  title: text('title'),
+  body: text('body'),
+  userId: text('userId'),
+  image: text('image'),
+  images: text('images', { mode: 'json' }).$type<string[]>(),
+  tags: text('tags', { mode: 'json' }).$type<string[]>()
 };
 
 export const table = sqliteTable(
   tableName,
   {
     ...definition,
-    ...auditSchema,
+    ...auditSchema
   },
   (table) => {
     return {
-      userIdIndex: index("postUserIdIndex").on(table.userId),
+      userIdIndex: index('postUserIdIndex').on(table.userId)
     };
   }
 );
@@ -147,16 +123,118 @@ export const table = sqliteTable(
 export const relation = relations(table, ({ one, many }) => ({
   user: one(users.table, {
     fields: [table.userId],
-    references: [users.table.id],
+    references: [users.table.id]
   }),
   categories: many(categoriesToPosts.table),
-  comments: many(comments.table),
+  comments: many(comments.table)
 }));
+
+export const access: ApiConfig['access'] = {
+  operation: {
+    read: true,
+    create: isAdminOrEditor
+  },
+  filter: {
+    // if a user tries to update a post and isn't the user that created the post the update won't happen
+    update: (ctx) => {
+      if (isAdmin(ctx)) {
+        return true;
+      } else {
+        const user = ctx.get('user');
+        if (user?.userId) {
+          // Return filter so update doesn't happen if userId doesn't match
+          return {
+            userId: user.userId
+          };
+        } else {
+          return false;
+        }
+      }
+    },
+    delete: (ctx) => {
+      if (isAdmin(ctx)) {
+        return true;
+      } else {
+        const user = ctx.get('user');
+        if (user?.userId) {
+          // Return filter so update doesn't happen if userId doesn't match
+          return {
+            userId: user.userId
+          };
+        } else {
+          return false;
+        }
+      }
+    }
+  },
+  fields: {
+    userId: {
+      update: false
+    }
+  }
+};
+
+export const hooks: ApiConfig['hooks'] = {
+  resolveInput: {
+    create: (ctx, data) => {
+      if (ctx.get('user')?.userId) {
+        data.userId = ctx.get('user').userId;
+      }
+      return data;
+    },
+    update: (ctx, id, data) => {
+      if (ctx.get('user')?.userId) {
+        data.userId = ctx.get('user').userId;
+      }
+      return data;
+    }
+  }
+};
+
+export const fields: ApiConfig['fields'] = {
+  image: {
+    type: 'file',
+    bucket: (ctx) => ctx.env.R2STORAGE,
+    path: 'images'
+  },
+  images: {
+    type: 'file[]',
+    bucket: (ctx) => ctx.env.R2STORAGE,
+    path: 'images'
+  },
+  tags: {
+    type: 'string[]'
+  }
+};
 
 ```
 
-Note that we're using a standard set of audit fields (`auditSchema`) for our tables so that we don't have to copy/paste the fields in the auditSchema object for every table. This is 
-completely optional.
+Note that we're using a standard set of audit fields (`auditSchema`) for our tables so that we don't have to copy/paste the fields in the auditSchema object for every table. This is completely optional.
+
+##  Adding a New Table
+
+If you want to add a new table, it is advised that you copy from one of the existing schema file. You'll will add your new file into the `[root]/src/db/schema/` folder.
+
+Modify the file as necessary.
+
+You will need to modify the `[root]/src/db/routes.ts` file and add your new table configuration like so:
+
+`/src/db/routes.ts`
+```js
+...
+export const tableSchemas = {
+  users,
+  posts,
+  comments,
+  categories,
+  categoriesToPosts,
+  userKeys,
+  userSessions,
+  myNewTable <-- add your new table here
+};
+```
+
+In order for SonicJs to see your new table, you need to create and apply and new database migration - see below...
 
 ## Migrations
 
