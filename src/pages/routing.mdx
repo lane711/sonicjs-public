@@ -30,13 +30,13 @@ Write your first custom set of routes in `/src/custom/hello.ts`.
 ```ts
 import { Hono } from 'hono'
 
-const app = new Hono()
+const hello = new Hono()
 
-app.get('/', (c) => {
+hello.get('/', (c) => {
   return c.text('Hello SonicJs!')
-})
+});
 
-export default app
+export { hello };
 ```
 
 Next all we need to do it import our new hello router into our main server, so let's update `src/server.ts` and 
