@@ -25,11 +25,14 @@ defined [schema](/tables#schema), so all of the below endpoints are created for 
 There is an admin page in the SonicJs UI that will list out the generated APIs for your reference:
 
 <p>
-<a target="_blank" href="http://127.0.0.1:8788/admin/api" rel="noopener noreferrer">
-  http://127.0.0.1:8788/admin/api
-</a>
+  <a
+    target="_blank"
+    href="http://127.0.0.1:8788/admin/api"
+    rel="noopener noreferrer"
+  >
+    http://127.0.0.1:8788/admin/api
+  </a>
 </p>
-
 
 ---
 
@@ -53,17 +56,36 @@ There is an admin page in the SonicJs UI that will list out the generated APIs f
       <Property name="offset" type="integer">
         The offset used for paging results.
       </Property>
-      <Property name="sortBy" type="string">
-        The field used for sorting results.
-      </Property>
-      <Property name="sortDirection" type="string">
-        The sort direction used for sorting results. Options are `asc` (default) or `desc`.
+      <Property name="sort" type="array">
+        The fields used for sorting results. The sorting order can be defined with:<br/>
+:asc for ascending order (default order, can be omitted) or :desc for descending order.<br/>
+Examples:<br/>
+        GET /v1/categories?sort=title - to sort on 1 field<br/>
+GET /v1/categories?sort[0]=title:desc&sort[1]=body:asc - to sort on multiple fields<br/>
       </Property>
       <Property name="includeContentType" type="boolean">
         Includes the content type meta data along with the content record. This is used in the admin section when generating the edit form.
       </Property>
       <Property name="filters" type="array">
-        Coming soon. This will allow you to contruct a sql `where` clause.
+        Queries can accept a filters parameter with the following syntax:<br/>
+        GET /v1/:tableName?filters[field][operator]=value<br/>
+        Examples:<br/>
+        /v1/categories?filters[title][$eq]=hello<br/>
+        The following operators are available:<br/>
+        <table>
+          <tr>
+            <td><b>Operator</b></td>
+            <td><b>Description</b></td>
+          </tr>
+          <tr>
+            <td>$eq</td>
+            <td>equals</td>
+          </tr>
+          <tr>
+            <td>$contain</td>
+            <td>contains</td>
+          </tr>
+        </table>
       </Property>
     </Properties>
 
@@ -175,14 +197,13 @@ http://localhost:8788/v1/users/9d370085-c116-47c9-9b22-7f33061ec7b1
 
 ```json {{ title: 'body' }}
 {
-  "data":
-    {
-      "name": "John",
-      "email": "john@somewhere.com",
-      "role": "admin"
-    }
+  "data": {
+    "name": "John",
+    "email": "john@somewhere.com",
+    "role": "admin"
+  }
 }
-````
+```
 
     </CodeGroup>
 
@@ -217,7 +238,9 @@ http://localhost:8788/v1/users/9d370085-c116-47c9-9b22-7f33061ec7b1
 
     <Properties>
       <Property name="id" type="string">
-The ID on the record that you want to update (supplied in the url)  
+
+The ID on the record that you want to update (supplied in the url)
+
 </Property>
   <Property name="data" type="string">
     The Json string containing the content data. This can include all or just some of the fields in your table.
@@ -230,12 +253,14 @@ The ID on the record that you want to update (supplied in the url)
     <CodeGroup title="Request" tag="PUT" label="/v1/users/9d370085-c116-47c9-9b22-7f33061ec7b9">
 
     ```json {{ title: 'body' }}
+
 {
-      "data":
-        {
-          "email": "updated@somewhere.com",
-        }
-  }
+"data":
+{
+"email": "updated@somewhere.com",
+}
+}
+
 ````
 
     </CodeGroup>
@@ -267,7 +292,7 @@ The ID on the record that you want to update (supplied in the url)
 
     <Properties>
   <Property name="id" type="string">
-The ID on the record that you want to delete 
+The ID on the record that you want to delete
  </Property>
     </Properties>
 
@@ -289,10 +314,9 @@ The ID on the record that you want to delete
   </Col>
 </Row>
 
---- 
+---
 
 ## Next Steps
 
-The automatically generated endpoints provide you with a solid foundation and can save you a lot of time, but eventually you'll want to create your own end points with custom SQL queries and 
+The automatically generated endpoints provide you with a solid foundation and can save you a lot of time, but eventually you'll want to create your own end points with custom SQL queries and
 business logic. For this, you'll want to check out the docs for the SonicJS [router](/routing).
-
