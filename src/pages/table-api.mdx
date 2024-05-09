@@ -171,6 +171,48 @@ http://localhost:8788/v1/users/9d370085-c116-47c9-9b22-7f33061ec7b1
 
 ---
 
+## Retrieve a user record via session {{ tag: 'GET', label: '/v1/user' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to retrieve a single record bases on the token passed into the header variable.
+
+    ### Optional attributes
+
+    <Properties>
+      <Property name="sessionId" type="guid">
+        The id of the record to be returned. See the [authentication](/authentication) section to see how to properly pass the bearer token in the header
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="GET" label="/v1/user">
+    ```bash {{ title: 'cURL' }}
+
+http://localhost:8788/v1/user  -H "Authorization: Bearer x555nastyhnyr2j6kyfypykos50daei3yer0fwcu3"
+
+````
+</CodeGroup>
+
+    ```json {{ title: 'Response (200)' }}
+    {
+      "id": "9d370085-c116-47c9-9b22-7f33061ec7b1",
+      "name": "John",
+      "email": "john@somewhere.com",
+      "role": "admin",
+      "created_on": 1688780261122,
+      "updated_on": 1688780261122
+    }
+````
+
+  </Col>
+</Row>
+
+---
+
 ## Create a record {{ tag: 'POST', label: '/v1/user' }}
 
 <Row>
