@@ -26,7 +26,7 @@ In these cases we use D1 (CloudFlare's SQLite product)
 
 Caching is SonicJs' secret sauce when it comes to low latency performance...
 
-SonicJs uses LokiJs to store previously requested endpoint results in an in-memory cache. The provides results to the client in the fastest possible way, 
+SonicJs stores previously requested endpoint results in an in-memory cache. The provides results to the client in the fastest possible way, 
 even faster than using Cloudflare KV. 
 
 Keep in mind that Cloudflare has over 200 server nodes worldwide, so this can return results ridiculously fast - almost comparable to running your app locally against a local database!
@@ -41,10 +41,9 @@ Here is the sequence of events that SonicJs uses to determine where to retrieve 
     1. If yes, return the data from the cache (this is the fastest way to return the results). This is location dependent, so it will only return results when someone else in the same region has previously made the same request.
     1. If no, processed to step #2.
 1. Are the results already in the KV-based cache?
-    1. If yes, return the data from the KV cache (this is the second fastest way to return the results). This is location dependent yet the cache will be valid
-    if any user anywhere in the world has made the same request due to 3.2 below!
+    1. If yes, return the data from the KV cache (this is the second fastest way to return the results). If its in the KV cache, it means that someone else in the world has made the same request and the results are already cached.
     1. If no, processed to step #3.
-1. SonicJs will return the data from Cloudflare D1 database (a SQLite databases).
+1. SonicJs will return the data from Cloudflare D1 database (a SQL based database).
     1. SonicJs will then cache the data in the in-memory cache using the full url as the cache key. This cache will be confined to the current node, so it will only be called upon by requests coming from the same region.
     1. SonicJs will then cache the data in the KV cache using the full url as the cache key. The cache propagates to all of Cloudflare's 200+ server nodes, so it can be utilized by users worldwide. And that's just freak'n awesome!
 
@@ -71,165 +70,87 @@ const allUsers = await db.select().from(users);
 
 SonicJs uses Drizzle for schema management. You can find the <a target="_blank" href="https://orm.drizzle.team/docs/sql-schema-declaration" rel="noopener noreferrer">full docs here</a>. 
 
-The SonicJs schemas can be found here: `/src/db/schema/`
+The SonicJs core schemas can be found here: `/src/db/schema/`
+
+However, for the sake of maintenance (being able to sync your fork), we recommend that you places all custom schema files in the `/src/custom/db/schema/` folder.
 
 Each table in your database will have one correspending schema file here you define the name, route, fields, relationships with other tables, and access control (which role can read/update/create/delete).
 
 This simple blog schema that is part of the `main` branch is essentially a boilerplate/example. It can be fully altered to suite your needs.
 
 Here 
-is an example of the schema definition for a posts table along with the relationship between them:
+is an example of the schema definition for a blog categories table:
 
 
-`/src/db/schema/posts`
+`/src/custom/db/schema/categories.ts`
 ```js
-import { sqliteTable, index, text } from 'drizzle-orm/sqlite-core';
+import { sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { auditSchema } from "@schema/audit";
+import { isAdminOrEditor } from "db/config-helpers";
+import type { ApiConfig } from "db/routes";
 
-import { relations } from 'drizzle-orm';
-import { auditSchema } from './audit';
-import * as users from './users';
-import * as categoriesToPosts from './categoriesToPosts';
-import * as comments from './comments';
-import { ApiConfig } from '../routes';
-import { isAdmin, isAdminOrEditor } from '../config-helpers';
+export const icon = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" />
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z" />
+</svg>
+`;
 
-export const tableName = 'posts';
-
-export const route = 'posts';
+export const tableName = "categories";
+export const name = "Categories";
+export const route = "categories";
 
 export const definition = {
-  id: text('id').primaryKey(),
-  title: text('title'),
-  body: text('body'),
-  userId: text('userId'),
-  image: text('image'),
-  images: text('images', { mode: 'json' }).$type<string[]>(),
-  tags: text('tags', { mode: 'json' }).$type<string[]>()
+  id: text("id").primaryKey(),
+  title: text("title").notNull(),
+  body: text("body"),
 };
 
-export const table = sqliteTable(
-  tableName,
-  {
-    ...definition,
-    ...auditSchema
-  },
-  (table) => {
-    return {
-      userIdIndex: index('postUserIdIndex').on(table.userId)
-    };
-  }
-);
+export const table = sqliteTable(tableName, {
+  ...definition,
+  ...auditSchema,
+});
 
-export const relation = relations(table, ({ one, many }) => ({
-  user: one(users.table, {
-    fields: [table.userId],
-    references: [users.table.id]
-  }),
-  categories: many(categoriesToPosts.table),
-  comments: many(comments.table)
-}));
-
-export const access: ApiConfig['access'] = {
+export const access: ApiConfig["access"] = {
   operation: {
     read: true,
-    create: isAdminOrEditor
+    create: true,
+    update: isAdminOrEditor,
+    delete: isAdminOrEditor,
   },
-  filter: {
-    // if a user tries to update a post and isn't the user that created the post the update won't happen
-    update: (ctx) => {
-      if (isAdmin(ctx)) {
-        return true;
-      } else {
-        const user = ctx.get('user');
-        if (user?.userId) {
-          // Return filter so update doesn't happen if userId doesn't match
-          return {
-            userId: user.userId
-          };
-        } else {
-          return false;
-        }
-      }
-    },
-    delete: (ctx) => {
-      if (isAdmin(ctx)) {
-        return true;
-      } else {
-        const user = ctx.get('user');
-        if (user?.userId) {
-          // Return filter so update doesn't happen if userId doesn't match
-          return {
-            userId: user.userId
-          };
-        } else {
-          return false;
-        }
-      }
-    }
-  },
-  fields: {
-    userId: {
-      update: false
-    }
-  }
 };
 
-export const hooks: ApiConfig['hooks'] = {
-  resolveInput: {
-    create: (ctx, data) => {
-      if (ctx.get('user')?.userId) {
-        data.userId = ctx.get('user').userId;
-      }
-      return data;
-    },
-    update: (ctx, id, data) => {
-      if (ctx.get('user')?.userId) {
-        data.userId = ctx.get('user').userId;
-      }
-      return data;
-    }
-  }
-};
-
-export const fields: ApiConfig['fields'] = {
-  image: {
-    type: 'file',
-    bucket: (ctx) => ctx.env.R2STORAGE,
-    path: 'images'
-  },
-  images: {
-    type: 'file[]',
-    bucket: (ctx) => ctx.env.R2STORAGE,
-    path: 'images'
-  },
-  tags: {
-    type: 'string[]'
+export const fields: ApiConfig["fields"] = {
+  body:{ 
+    type:'textArea'
   }
 };
 
 ```
 
-Note that we're using a standard set of audit fields (`auditSchema`) for our tables so that we don't have to copy/paste the fields in the auditSchema object for every table. This is completely optional.
+### More examples
+Some of the schemas in the project have more complex use cases such as relationships, hooks and more customized permissions. Be sure to check out the other schema files in the `/src/db/schema/` and `/src/custom/db/schema/` folder for more examples.
+
+### Icon
+There icon used will be displayed in the admin UI. You can use any SVG icon here. We are currently used hero icons: https://heroicons.com/
+
+### Audit Fields
+Note that we're using a standard set of audit fields (`auditSchema`) for our tables so that we don't have to copy/paste the fields (**createdOn** and **updatedOn**) in the auditSchema object for every table. This is completely optional.
 
 ##  Adding a New Table
 
-If you want to add a new table, it is advised that you copy from one of the existing schema file. You'll will add your new file into the `[root]/src/db/schema/` folder.
+If you want to add a new table, it is advised that you copy from one of the existing schema file. You'll will add your new file into the `[root]/src/custom/db/schema/` folder.
 
-Modify the file as necessary.
+Modify the custom config file as necessary.
 
-You will need to modify the `[root]/src/db/routes.ts` file and add your new table configuration like so:
+You will need to modify the custom configuration file and add your new table configuration like so:
 
-`/src/db/routes.ts`
+`/src/custom/custom.config.ts`
 ```js
 ...
 export const tableSchemas = {
-  users,
   posts,
   comments,
   categories,
-  categoriesToPosts,
-  userKeys,
-  userSessions,
   myNewTable <-- add your new table here
 };
 ```
@@ -240,7 +161,7 @@ In order for SonicJs to see your new table, you need to create and apply and new
 
 SonicJs also uses Drizzles's built in support for database migrations and we've set it up to work out of the box with Cloudflare D1 (SQLite).
 
-After making a change to any of your schema definition files (`/src/db/schema/*.ts`) you need to run the following command to generate the migration file:
+After making a change to any of your schema definition files (`/src/custom/db/schema/*.ts`) you need to run the following command to generate the migration file:
 
 ```text
 npm run generate
@@ -274,9 +195,9 @@ To run the migration against your local development database:
 ```text
 npm run up
 ```
-This will update your local D1 (SQLite) database.
+This will update your **local** D1 (SQLite) database.
 
-And when you are ready to update your production database (in the Cloudflare Cloud):
+And when you are ready to update your **production** database (in the Cloudflare Cloud):
 
 ```text
 npm run up:prod
