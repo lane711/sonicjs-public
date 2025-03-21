@@ -12,7 +12,43 @@ With SonicJs you can use the built in data access tier or interact directly with
 
 It is recommend that you use the built in data-tier in order to get the benefits of caching, however this may not be suitable for all use-cases.
 
-## Get
+The main data access commands are location here:
+`src/services/data.ts`
+
+## getRecords
+
+Example: List users table records
+```ts
+  let data = await getRecords(
+    context,
+    "users",
+    {limit: 10, offset: 0, sortBy: "created_on", sortDirection: "desc"},
+    "/api/v1/users?limit=10&offset=0&sortBy=created_on&sortDirection=desc",
+    "fastest",
+    undefined
+  );
+```
+
+Example: List users table records using a custom sql statement
+You can pass in a custom function to getRecords that will return the sql statement to be executed. This can include T-SQL and also custom business rules
+```ts
+  let data = await getRecords(
+    context,
+    "",
+    {},
+    "/api/v1/users?getNewUsers",
+    "fastest",
+    "SELECT * FROM users WHERE created_on > '2022-01-01'"
+  );
+```
+
+## insertRecord
+
+## updateRecord
+
+## deleteRecord
+
+
 Here is a basic example below. This file is also located in the repo here:
 
 `src/custom/example.ts`

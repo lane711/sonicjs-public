@@ -213,6 +213,7 @@ export const navigation = [
       { title: 'Persistence', href: '/persistence' },
       { title: 'Admin UI', href: '/admin-ui' },
       { title: 'Routing', href: '/routing' },
+      { title: 'Middleware', href: '/middleware-auth-caching' },
       { title: 'Data Access', href: '/data-access' },
       { title: 'Authentication', href: '/authentication' },
       { title: 'Access Control', href: '/access-control' },

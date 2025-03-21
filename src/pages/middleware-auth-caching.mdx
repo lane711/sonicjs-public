@@ -1,0 +1,22 @@
+export const description =
+  "Middleware is used in SonicJs to verify authentication and determine whether or not a cached version of the data should be returned."
+
+# Middleware
+
+Middleware in SonicJS plays a crucial role in handling authentication and optimizing performance. It verifies user authentication and intelligently decides whether to serve a 
+cached version of the data or fetch fresh content, ensuring both security and efficiency.
+
+SonicJs' middleware can be found:
+`src/middleware/index.ts`
+
+## Authentication Middleware
+
+Authentication middleware is responsible for verifying the identity of users and ensuring that they have the necessary permissions to access specific resources.
+
+- For the API, it validates the Bearer Token
+- For the Admin UI, it verifies the user's session
+
+## Cache Middleware
+
+- Cache middleware is used to determine whether to serve a cached version of the data or fetch fresh content from the database.
+- It is responsible for adding urls to the cache request table. This table is used to determine which urls should be cached and for how long. It also enables cache items to be rebuild the cache on application startup for the in-memory cache.
