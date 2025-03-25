@@ -65,6 +65,7 @@ Examples:<br/>
 GET `/api/v1/categories?sort=title`<br/>
 **Sort on multiple fields:**<br/>
 GET `/api/v1/categories?sort[0]=title:desc&sort[1]=body:asc`<br/>
+
 </Property>
 <Property name="filters" type="array">
 Queries can accept a filters parameter with the following syntax:<br/>
@@ -76,20 +77,135 @@ Examples:<br/>
 `/api/v1/categories?filters[title][$eq]=hello&filters[body][$contain]=world`
 
 The following operators are available:<br/>
+
 <table>
-<tr>
-<td><b>Operator</b></td>
-<td><b>Description</b></td>
-</tr>
-<tr>
-<td>$eq</td>
-            <td>equals</td>
-          </tr>
-          <tr>
-            <td>$contain</td>
-<td>contains</td>
-</tr>
+   <thead>
+      <tr>
+         <th>Operator Title</th>
+         <th>Operator</th>
+         <th>Description</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr>
+         <td>Equals</td>
+         <td><code>$eq</code></td>
+         <td>Equal to</td>
+      </tr>
+      <tr>
+         <td>Doesn't equal</td>
+         <td><code>$neq</code></td>
+         <td>Not equal to</td>
+      </tr>
+      <tr>
+         <td>Less than</td>
+         <td><code>$lt</code></td>
+         <td>Less than</td>
+      </tr>
+      <tr>
+         <td>Less than or equal to</td>
+         <td><code>$lte</code></td>
+         <td>Less than or equal to</td>
+      </tr>
+      <tr>
+         <td>Greater than</td>
+         <td><code>$gt</code></td>
+         <td>Greater than</td>
+      </tr>
+      <tr>
+         <td>Greater than or equal to</td>
+         <td><code>$gte</code></td>
+         <td>Greater than or equal to</td>
+      </tr>
+      <tr>
+         <td>Is one of</td>
+         <td><code>$in</code></td>
+         <td>Matches any of the values</td>
+      </tr>
+      <tr>
+         <td>Is not one of</td>
+         <td><code>$nin</code></td>
+         <td>Doesn't match any of the values</td>
+      </tr>
+      <tr>
+         <td>Is null</td>
+         <td><code>$null</code></td>
+         <td>Is <code>null</code></td>
+      </tr>
+      <tr>
+         <td>Isn't null</td>
+         <td><code>$nnull</code></td>
+         <td>Is not <code>null</code></td>
+      </tr>
+      <tr>
+         <td>Contains</td>
+         <td><code>$contains</code></td>
+         <td>Contains the substring</td>
+      </tr>
+      <tr>
+         <td>Doesn't contain</td>
+         <td><code>$ncontains</code></td>
+         <td>Doesn't contain the substring</td>
+      </tr>
+      <tr>
+         <td>Starts with</td>
+         <td><code>$starts_with</code></td>
+         <td>Starts with</td>
+      </tr>
+      <tr>
+         <td>Doesn't start with</td>
+         <td><code>$nstarts_with</code></td>
+         <td>Doesn't start with</td>
+      </tr>
+      <tr>
+         <td>Ends with</td>
+         <td><code>$ends_with</code></td>
+         <td>Ends with</td>
+      </tr>
+      <tr>
+         <td>Doesn't end with</td>
+         <td><code>$nends_with</code></td>
+         <td>Doesn't end with</td>
+      </tr>
+      <tr>
+         <td>Is between</td>
+         <td><code>$between</code></td>
+         <td>Is between two values (inclusive)</td>
+      </tr>
+      <tr>
+         <td>Isn't between</td>
+         <td><code>$nbetween</code></td>
+         <td>Is not between two values (inclusive)</td>
+      </tr>
+      <tr>
+         <td>Is empty</td>
+         <td><code>$empty</code></td>
+         <td>Is empty (<code>null</code> or falsy)</td>
+      </tr>
+      <tr>
+         <td>Isn't empty</td>
+         <td><code>$nempty</code></td>
+         <td>Is not empty (<code>null</code> or falsy)</td>
+      </tr>
+      <tr>
+         <td>Intersects</td>
+         <td><code>$intersects</code> <sup>[1]</sup></td>
+         <td>Value intersects a given point</td>
+      </tr>
+
+      <tr>
+         <td>Intersects Bounding box</td>
+         <td><code>$intersects_bbox</code> <sup>[1]</sup></td>
+         <td>Value is in a bounding box</td>
+      </tr>
+      <tr>
+         <td>Doesn't intersect bounding box</td>
+         <td><code>$nintersects_bbox</code> <sup>[1]</sup></td>
+         <td>Value is not in a bounding box</td>
+      </tr>
+   </tbody>
 </table>
+
 </Property>
 </Properties>
 

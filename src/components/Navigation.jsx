@@ -219,6 +219,7 @@ export const navigation = [
       { title: 'Access Control', href: '/access-control' },
       { title: 'File Management', href: '/file-management' },
       { title: 'Environment Variables', href: '/environment-variables' },
+      { title: 'End to End Testing', href: '/e2e' },
       { title: 'Deploy', href: '/deploy' },
       { title: 'Core Dev Guide', href: '/core-developers-guide' },
     ],
