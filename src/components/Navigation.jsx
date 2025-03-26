@@ -214,7 +214,7 @@ export const navigation = [
       { title: 'Admin UI', href: '/admin-ui' },
       { title: 'Routing', href: '/routing' },
       { title: 'Middleware', href: '/middleware-auth-caching' },
-      { title: 'Data Access', href: '/data-access' },
+      // { title: 'Data Access', href: '/data-access' },
       { title: 'Authentication', href: '/authentication' },
       { title: 'Access Control', href: '/access-control' },
       { title: 'File Management', href: '/file-management' },

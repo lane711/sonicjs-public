@@ -5,9 +5,9 @@ export const description =
 
 SonicJs has a common token based authentication system allowing you login, obtain a valid token and supply that token to subsequent api requests. {{ className: 'lead' }}
 
-# Access Control
+## API Login
 
-1. To authorize via the API post to `/api/v1/auth/login` with the email and password in the body
+1. To authorize via the API POST to `/api/v1/auth/login` with the email and password in the body
    ```json
    {
      "email": "user@sonicjs.com",
@@ -15,12 +15,43 @@ SonicJs has a common token based authentication system allowing you login, obtai
    }
    ```
 1. The API will return a bearer token
+
    ```json
    {
-     "bearer": "eo0t9q52njemo83rm1qktr6kwjh8zu5o3vma1g6j"
+     "bearer": "eo0t9q52njemo83rm1qktr6kwjh8zu5o3vma1g6j",
+     "expires": 1748197383650
    }
    ```
-1. Then add that bearer token to the Authorization header on future requests
+
+  1. You can now access `http://localhost:4321/api/v1/auth/user` to obtain session and user data for the currently logged in user:
+
+      ```js
+      {
+          "session": {
+              "userId": "2026ad2d-2dc2-4187-9809-7ade12d621b1",
+              "activeExpires": 1748202525070,
+              "idleExpires": 1748202525070,
+              "createdOn": 1743018525070,
+              "updatedOn": 1743018525070,
+              "token": "eo0t9q52njemo83rm1qktr6kwjh8zu5o3vma1g6j"
+          },
+          "user": {
+              "id": "2026ad2d-2dc2-4187-9809-7ade12d621b1",
+              "firstName": "John",
+              "lastName": "Doe",
+              "profile": {},
+              "email": "demo@demo.com",
+              "role": "admin",
+              "createdOn": 1739985219999,
+              "updatedOn": 1742332702647
+          }
+      }
+      ```
+
+   ## Include the Bearer Token
+
+1. Add the bearer token to the Authorization header on future requests
+
    ```js
    const url =
      'http://localhost:8788/v1/posts/c1d462a4-fd10-4bdb-bbf2-2b33a94f82aa'
@@ -40,4 +71,37 @@ SonicJs has a common token based authentication system allowing you login, obtai
    fetch(url, requestOptions)
    ```
 
-1. You can now access the current user profile data at `/v1/auth/user`
+## Logout
+
+### Client Side
+
+To logout, simply delete the token from the client side, for example in a React app it might be:
+
+   ```js
+   localStorage.removeItem('bearer')
+   ```
+
+### Server Side
+
+To Logout on the server side and delete the session record from the userSessions table:
+
+   ```js
+   const url = 'http://localhost:8788/v1/auth/logout'
+
+   const requestOptions = {
+     method: 'POST',
+     headers: {
+       'Content-Type': 'application/json',
+       Authorization: 'Bearer eo0t9q52njemo83rm1qktr6kwjh8zu5o3vma1g6j',
+     },
+   }
+   fetch(url, requestOptions)
+   ```
+
+Expected Response (200):
+
+  ```json
+  {
+    "message": "Successfully logged out"
+  }
+  ````
