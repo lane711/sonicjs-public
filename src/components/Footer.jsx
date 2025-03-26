@@ -50,6 +50,19 @@ const FeedbackForm = forwardRef(function FeedbackForm({ onSubmit }, ref) {
   )
 })
 
+function LinkToRepo() {
+  return (
+    <div className="absolute inset-0 flex items-center justify-center gap-6 md:justify-start">
+      <p className="text-sm text-zinc-600 dark:text-zinc-400">
+        <a href="https://github.com/lane711/sonicjs-public" target="_blank"    rel="noreferrer"      className=" font-semibold text-zinc-900 transition hover:text-zinc-600 dark:text-white dark:hover:text-zinc-300"
+        >
+          Edit This Page on Github<span className='float-right ml-2 mt-[2px]'><ExternalLink /></span>
+        </a>
+      </p>
+    </div>
+  )
+}
+
 const FeedbackThanks = forwardRef(function FeedbackThanks(_props, ref) {
   return (
     <div
@@ -78,7 +91,7 @@ function Feedback() {
 
   return (
     <div className="relative h-8">
-      <Transition
+      {/* <Transition
         show={!submitted}
         as={Fragment}
         leaveFrom="opacity-100"
@@ -95,7 +108,8 @@ function Feedback() {
         enter="delay-150 duration-300"
       >
         <FeedbackThanks />
-      </Transition>
+      </Transition> */}
+      <LinkToRepo />
     </div>
   )
 }
@@ -157,6 +171,14 @@ function PageNavigation() {
   )
 }
 
+function ExternalLink(){
+  return(
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 h-4 w-4">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+</svg>
+
+  )
+}
 function TwitterIcon(props) {
   return (
     <svg viewBox="0 0 20 20" aria-hidden="true" {...props}>
@@ -187,7 +209,12 @@ function DiscordIcon(props) {
 
 function SocialLink({ href, icon: Icon, children }) {
   return (
-    <Link href={href} target="_blank" rel="noopener noreferrer" className="group">
+    <Link
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group"
+    >
       <span className="sr-only">{children}</span>
       <Icon className="h-5 w-5 fill-zinc-700 transition group-hover:fill-zinc-900 dark:group-hover:fill-zinc-500" />
     </Link>
