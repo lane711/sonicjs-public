@@ -1,22 +1,27 @@
 export const description =
-  "SonicJs' admin section is written in React SSR. If you are making changes to the core administrative interface, this guide will help you get started."
+  "SonicJs' admin section on Astro If you are making changes to the core administrative interface, this guide will help you get started."
 
 # Core Developer's Admin Guide 
 
-SonicJs' admin section is written in React SSR. If you are making changes to the core administrative interface, this guide will help you get started.
+SonicJs' admin is built on <a href="https://docs.astro.build/en/getting-started/" target="_blank" rel="noopener noreferrer">Astro</a>.
 
-If you are familiar with React, you'll be right at home making updates to the SonicJs admin UI.
+If you are making changes to the core administrative interface, this guide will help you get started.
 
-SonicJs uses React SSR (Server Side Rendering). 
+If you are familiar with Astro, you'll be right at home making updates to the SonicJs admin UI. If not, it is absolutely worth your time to learn the basics of Astro.
+
+# UI Files
 
 All admin ui related code can be found here:
 
-`src/cms/admin`
+`src/pages/admin`
 
-The admin theme is located here:
+The admin theme is built in Tailwinds CSS from one of the paid example components:
+https://tailwindcss.com/plus/ui-blocks/application-ui/application-shells/sidebar
 
-`src/cms/admin/theme.tsx`
+The routing for the admin section is based on standard Astro routing:
+https://docs.astro.build/en/guides/routing/
 
-The routing for the admin section can be found here:
+# Tables
 
-`src/cms/admin/admin.ts`
+Sonicjs uses the Tanstack Table, a headless table library for React. The table is built in a way that allows you to easily add new columns, sorting, filtering, etc. without having to change the core code:
+https://tanstack.com/table/latest

@@ -203,10 +203,29 @@ The following operators are available:<br/>
          <td><code>$nintersects_bbox</code> <sup>[1]</sup></td>
          <td>Value is not in a bounding box</td>
       </tr>
+
    </tbody>
 </table>
 
+    ### Return Data
+
+    <Properties>
+      <Property name="data" type="object">
+        An array of the queried data.
+      </Property>
+      <Property name="source" type="string">
+        The source of the data. Options include `d1`, `kv`, `in-memory`, `r2`.
+      </Property>
+      <Property name="total" type="integer">
+        The total number of records in the table. This is useful for pagination.
+      </Property>
+      <Property name="executionTime" type="integer">
+        Time in milliseconds on the server side from the time the API request was received to the time the response was sent.
+      </Property>
+    </Properties>
+
 </Property>
+
 </Properties>
 
   </Col>
@@ -220,33 +239,48 @@ http://localhost:8788/api/v1/content
 ````
 </CodeGroup>
 
-    ```json {{ title: 'Response (200)' }}
-[
-      {
-        "id": "9d370085-c116-47c9-9b22-7f33061ec7b1",
-        "name": "John",
-        "email": "john@somewhere.com",
-        "role": "admin",
-        "created_on": 1688780261122,
-        "updated_on": 1688780261122
-      },
-      {
-        "id": "90bb70b9-333d-4265-a68e-cc6f86b299fd",
-        "name": "Kate",
-        "email": "kate@somewhere.com",
-        "role": "user",
-        "created_on": 1689293023190,
-        "updated_on": 1689293023190
-      },
-]
-````
+```json {{ title: 'Response (200)' }}
+{
+  "data": [
+    {
+      "id": "94f0d7d1-d02d-4928-8775-ca5d9a58436a",
+      "title": "Quod Dolore Quia Adipisci Expedita",
+      "body": "asdfweqrqwed\r\nqwewqes\r\n",
+      "userId": "082ec265-73b1-4456-9870-1a0943909f6d",
+      "image": null,
+      "images": null,
+      "tags": null,
+      "createdOn": 1734126799112,
+      "updatedOn": 1742894772382,
+      "total": 1178
+    },
+    {
+      "id": "487663b9-e9e1-4687-832e-70f60dde1182",
+      "title": "Odio Modi Incidunt Animi Eius",
+      "body": "modi et provident dolorum repellendus molestiae velit ipsam eius repellendus sapiente recusandae sequi maiores aperiam occaecati labore dolorem optio quibusdam excepturi nostrum quia officiis maxime amet neque ratione voluptatibus delectus voluptates quam ullam velit veniam repellendus ratione autem ad doloremque doloremque ratione modi similique aspernatur quis asperiores assumenda enim neque facere aut aut vel amet non quae ea quod iusto delectus cumque sapiente reiciendis molestiae culpa possimus voluptate laboriosam reiciendis temporibus fuga magni quae autem velit repellat repudiandae vero at numquam nemo beatae quia dolorum odio voluptates libero laborum nisi eligendi odio atque rerum vero nam fugiat perspiciatis non rem amet temporibus vero doloremque voluptatibus sed nesciunt deserunt est vitae est molestias eos voluptatum ipsa quibusdam non in repudiandae officiis accusamus fugit nesciunt enim ipsum officiis exercitationem accusantium autem nemo placeat illum dolore quam animi maxime quia eligendi ut deleniti dolorum reprehenderit beatae molestiae itaque eveniet cum consequuntur nemo ad ex ratione deleniti ab culpa exercitationem beatae repudiandae mollitia aspernatur repudiandae iste hic voluptatibus accusantium sunt labore eveniet laboriosam at minus porro impedit eum sit aliquam dolor porro assumenda voluptate accusamus repudiandae voluptatem vero impedit voluptate occaecati doloremque doloribus provident quae at inventore aspernatur nihil dolor aspernatur illo veniam odit quae reprehenderit minima quibusdam minima vitae reiciendis iusto ipsum omnis voluptas dolores placeat porro ducimus deserunt ex voluptates pariatur excepturi quas et perferendis ad nam necessitatibus ipsam tempore voluptate incidunt inventore illo culpa ab nostrum adipisci temporibus animi recusandae aut numquam ea porro a repellendus nobis cupiditate maiores sint quae odio provident maiores voluptates dolorum eligendi sunt ratione blanditiis natus amet itaque voluptas corrupti culpa illo voluptatum totam voluptates modi in officia ratione sint itaque harum et dolorum natus et totam placeat repellendus eaque mollitia culpa autem itaque magnam veritatis aspernatur atque illum ullam deleniti dignissimos dignissimos repudiandae sint minus fugiat earum consectetur suscipit occaecati consectetur aut quis quod veritatis mollitia earum in tenetur aspernatur vero veniam quidem natus velit doloremque fugit fuga quod natus corrupti odio quae quo saepe perferendis consequatur quisquam ratione deserunt at et molestias similique illum unde tenetur illum culpa illum dicta saepe tempora praesentium occaecati ab dolorem earum iure amet recusandae repellendus perferendis maiores quaerat omnis adipisci itaque minus ducimus cupiditate ex recusandae rerum dolor odit praesentium quaerat porro dolore pariatur ipsam debitis fuga consequuntur nobis suscipit consectetur voluptate quos dolorum commodi libero non libero eum soluta aperiam molestiae fuga quas eos officia deserunt hic suscipit est placeat quis laborum doloribus ipsam quaerat corporis ipsa ipsum dolorum libero impedit ad recusandae suscipit corporis repudiandae culpa corporis eaque aspernatur repellendus earum earum reiciendis nam architecto omnis eaque nulla animi saepe reiciendis ea quidem delectus harum provident porro adipisci fugit suscipit dolor quia nemo perferendis reiciendis quia repellendus soluta ullam accusantium accusantium ex praesentium necessitatibus a repudiandae totam itaque quaerat incidunt expedita adipisci debitis facere laudantium inventore iusto a non itaque corporis vel labore nulla deleniti nemo consequatur ipsam at vero nesciunt necessitatibus quos consequatur perferendis vel quae necessitatibus quo non maxime tenetur soluta perspiciatis animi ducimus ipsum illum architecto ut impedit mollitia dolorem magnam quia possimus odio assumenda iusto similique illum veritatis ipsa beatae non quibusdam ullam consequuntur maxime minus provident vero unde hic aut a error error porro harum deserunt nam quas cumque soluta deserunt sint quo sed nisi cumque reiciendis illo non excepturi ipsa a repudiandae soluta dolorum impedit deleniti quos magni placeat eius alias cumque rem repellendus ut est totam cum possimus modi nesciunt aperiam itaque itaque necessitatibus laborum aspernatur adipisci illum odit saepe tenetur omnis excepturi culpa ab aliquam minus odio adipisci ducimus sed similique modi eos mollitia error officia quas atque cupiditate vitae veniam earum omnis dolor soluta ipsa veniam iste aliquid quo placeat maiores eos mollitia mollitia occaecati dolor numquam accusamus laboriosam magnam sapiente delectus cum quis laborum quae dolorem quos error excepturi ipsam enim quam est ullam accusamus nulla optio sunt cumque expedita suscipit mollitia deleniti reiciendis occaecati asperiores quo numquam ipsum a maxime aut inventore nemo eaque amet explicabo rerum dolorem consequatur deleniti eveniet tenetur esse et repudiandae nostrum vel deserunt maxime enim quos quidem dignissimos rem veritatis excepturi error est sed ex dolorum debitis occaecati alias maxime neque nostrum ducimus perferendis illum est eius voluptas culpa ipsam blanditiis voluptatum distinctio aut consequuntur eaque ea magnam quos expedita illum id illum ex nostrum sunt inventore explicabo architecto odit fuga fuga mollitia laudantium in consectetur dolorem placeat voluptas a delectus temporibus nisi repudiandae quia perferendis nam reiciendis eligendi esse maiores perferendis quaerat minima ea repudiandae aperiam impedit autem excepturi culpa qui reprehenderit totam enim quam atque ratione quidem odio voluptatem fugiat error veniam nobis tempore consequuntur velit nihil sequi nobis facilis nesciunt at similique officiis velit sunt odio at modi consequuntur voluptatem harum natus corporis porro ad sunt velit hic sed adipisci officia illo doloremque quos doloribus natus animi fugiat est hic quidem quo occaecati ullam explicabo quaerat eveniet fugit recusandae dolorem sint magnam quibusdam aspernatur aut vel blanditiis inventore voluptatum possimus debitis consectetur eum possimus quae quibusdam cupiditate occaecati veniam velit dolor quae in doloremque consequatur fugit blanditiis asperiores laborum recusandae ratione maxime quod voluptatum culpa expedita perferendis alias et accusamus asperiores tempore accusantium molestiae recusandae accusantium aspernatur ratione natus asperiores nobis odit velit voluptatum architecto numquam nesciunt tenetur debitis modi atque reprehenderit incidunt aperiam eligendi ullam quis dolor optio quia amet inventore et repudiandae nihil praesentium aut architecto delectus dicta perspiciatis doloremque reiciendis occaecati molestiae dolores tenetur debitis nisi asperiores harum commodi excepturi itaque voluptatem numquam dolore et ut asperiores blanditiis voluptate expedita distinctio rem reprehenderit aut tempora laudantium est fuga laboriosam asperiores laboriosam ea iusto ipsum incidunt dolorum veritatis enim tempora alias non rem adipisci corporis eaque expedita saepe aliquid nam aliquid aperiam praesentium debitis magnam cumque expedita quas exercitationem harum placeat distinctio optio corporis ipsam sed assumenda earum illo id quia perspiciatis laudantium porro quas iste doloribus deserunt aliquid amet consequatur numquam repellat aspernatur libero iure fuga fuga dolore adipisci expedita quod doloremque sunt iusto corporis eius laboriosam odio reprehenderit fugit deleniti impedit iusto fugit",
+      "userId": "1d3344ab-a5a4-4cbb-b9ad-20f8820e7224",
+      "image": null,
+      "images": null,
+      "tags": null,
+      "createdOn": 1734126928694,
+      "updatedOn": 1734126928694,
+      "total": 1178
+    },
+    ...
+  ],
+  "source": "d1",
+  "total": 1178,
+  "executionTime": 68
+}
+
+```
 
   </Col>
 </Row>
 
 ---
 
-## Retrieve a single table record {{ tag: 'GET', label: '/api/v1/users/:id' }}
+## Retrieve a single table record {{ tag: 'GET', label: '/api/v1/posts/:id' }}
 
 <Row>
   <Col>
@@ -264,31 +298,60 @@ http://localhost:8788/api/v1/content
       </Property>
     </Properties>
 
+        ### Return Data
+
+    <Properties>
+      <Property name="data" type="object">
+        The queried data.
+      </Property>
+      <Property name="source" type="string">
+        The source of the data. Options include `d1`, `kv`, `in-memory`, `r2`.
+      </Property>
+      <Property name="total" type="integer">
+        This will return always return 1.
+      </Property>
+      <Property name="executionTime" type="integer">
+        Time in milliseconds on the server side from the time the API request was received to the time the response was sent.
+      </Property>
+    </Properties>
+
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="GET" label="/api/v1/users/9d370085-c116-47c9-9b22-7f33061ec7b1">
+    <CodeGroup title="Request" tag="GET" label="/api/v1/posts/9d370085-c116-47c9-9b22-7f33061ec7b1">
     ```bash {{ title: 'cURL' }}
 
-http://localhost:8788/api/v1/users/9d370085-c116-47c9-9b22-7f33061ec7b1
+http://localhost:8788/api/v1/posts/9d370085-c116-47c9-9b22-7f33061ec7b1
 
 ````
+
 </CodeGroup>
 
-    ```json {{ title: 'Response (200)' }}
+```json {{ title: 'Response (200)' }}
+{
+  "data": [
     {
-      "id": "9d370085-c116-47c9-9b22-7f33061ec7b1",
-      "name": "John",
-      "email": "john@somewhere.com",
-      "role": "admin",
-      "created_on": 1688780261122,
-      "updated_on": 1688780261122
+      "id": "94f0d7d1-d02d-4928-8775-ca5d9a58436a",
+      "title": "Quod Dolore Quia Adipisci Expedita",
+      "body": "asdfweqrqwed\r\nqwewqes\r\n",
+      "userId": "082ec265-73b1-4456-9870-1a0943909f6d",
+      "image": null,
+      "images": null,
+      "tags": null,
+      "createdOn": 1734126799112,
+      "updatedOn": 1742894772382,
+      "total": 1178
     }
-````
+  ],
+  "source": "d1",
+  "total": 1,
+  "executionTime": 12
+}
+
+```
 
   </Col>
 </Row>
-
 ---
 
 ## Retrieve a user record via session {{ tag: 'GET', label: '/api/v1/user' }}
@@ -298,11 +361,16 @@ http://localhost:8788/api/v1/users/9d370085-c116-47c9-9b22-7f33061ec7b1
 
     This endpoint allows you to retrieve a single record bases on the token passed into the header variable.
 
-    ### Optional attributes
+    ### Required Attributes
 
     <Properties>
-      <Property name="sessionId" type="guid">
+      <Property name="token" type="string">
         The id of the record to be returned. See the [authentication](/authentication) section to see how to properly pass the bearer token in the header
+      </Property>
+    </Properties>
+        <Properties>
+      <Property name="Content-Type" type="string">
+        Must be set to "application/json"
       </Property>
     </Properties>
 
@@ -312,21 +380,36 @@ http://localhost:8788/api/v1/users/9d370085-c116-47c9-9b22-7f33061ec7b1
     <CodeGroup title="Request" tag="GET" label="/api/v1/user">
     ```bash {{ title: 'cURL' }}
 
-http://localhost:8788/api/v1/user -H "Authorization: Bearer x555nastyhnyr2j6kyfypykos50daei3yer0fwcu3"
+http://localhost:8788/api/v1/user -H "Authorization: Bearer x555nastyhnyr2j6kyfypykos50daei3yer0fwcu3, Content-Type: application/json"
 
 ````
+
 </CodeGroup>
 
     ```json {{ title: 'Response (200)' }}
     {
-      "id": "9d370085-c116-47c9-9b22-7f33061ec7b1",
-      "name": "John",
-      "email": "john@somewhere.com",
-      "role": "admin",
-      "created_on": 1688780261122,
-      "updated_on": 1688780261122
+      "data": {
+        "session": {
+          "userId": "2026ad2d-2dc2-4187-9809-7ade12d621b1",
+          "activeExpires": 1748293651641,
+          "idleExpires": 1748293651641,
+          "createdOn": 1743109651641,
+          "updatedOn": 1743109651641,
+          "token": "tyvimkyxenpvzc5xj7ljwhqqtyuh72cx"
+        },
+        "user": {
+          "id": "2026ad2d-2dc2-4187-9809-7ade12d621b1",
+          "firstName": "John",
+          "lastName": "Doe",
+          "profile": {},
+          "email": "demo@demo.com",
+          "role": "admin",
+          "createdOn": 1739985219999,
+          "updatedOn": 1742332702647
+        }
+      }
     }
-````
+```
 
   </Col>
 </Row>
@@ -453,6 +536,7 @@ The ID on the record that you want to update (supplied in the url)
     ### Required attributes
 
     <Properties>
+
   <Property name="id" type="string">
 The ID on the record that you want to delete
  </Property>
@@ -482,3 +566,4 @@ The ID on the record that you want to delete
 
 The automatically generated endpoints provide you with a solid foundation and can save you a lot of time, but eventually you'll want to create your own end points with custom SQL queries and
 business logic. For this, you'll want to check out the docs for the SonicJS [router](/routing).
+````
