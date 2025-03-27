@@ -3,102 +3,31 @@ export const description =
 
 # Hooks
 
-SonicJs has a flexible authentication system allowing you to set various data access controls at a table and/or field level. {{ className: 'lead' }}
+SonicJs has a flexible hook system that always you to inject your own custom code into various core function without have to alter the core code or recreate their primary functions {{ className: 'lead' }}
 
-Its meant to be easy to understand and use, but also powerful enough to handle complex access control requirements.
+Hooks are associated with the main CRUD functions of the API. They are defined in the schema file for each table.
 
-Access control is defined in the schema file for each table.
-
-The `access` property defines access control rules for interacting with the data. It allows granular control over who can perform what actions.
-
-By default, all operations (GET, POST, PUT, DELETE) are permitted. If you don’t define any access control rules, everything is allowed.
-This is fine during early development, but you should restrict access to your data as soon as possible—ideally well before deploying your site online.
-
-The access property has two main sub-properties: `operations` and `fields`.
-
-## Operations Control
-
-Let's check out the access **operation** control rules for the `posts` table:
-
-`src/custom/db/schema/posts.ts`:
+Let's take a look at the hooks for the `users` table:
 
 ```js
-...
-export const access: ApiConfig["access"] = {
-  operation: {
-    read: true,
-    create: isAdminOrEditor,
-    update: isAdminOrUser,
-    delete: isAdminOrUser,
-  },
-  ...
-```
-
-As we can see, the `posts` table has the following access control rules:
-
-1. Everyone can read the posts (GET)
-2. Admin or Editors role can create posts (POST)
-3. Admin or User who create can update (PUT)
-4. Admin or User who created can delete (DELETE)
-
-### Access Control Helpers
-
-The are 4 access control helpers and you can easily add your own:
-`src/db/config-helpers.ts`
-
-1. isUser
-1. isAdmin
-1. isAdminOrEditor
-1. isAdminOrUser
-
-For example, here is the core source code for isAdminOrEditor:
-
-```js
-export function isAdminOrEditor(ctx: AppContext) {
-  const user = ctx.locals.user
-  const role = user?.role?.toLowerCase() || ''
-  if (role === 'admin' || role === 'editor') {
-    return true
-  }
-  return false
-}
-```
-
-## Fields Control
-Often times, you may want to restrict access to specific fields. For example, you may want to prevent users from updating their email address.
-
-Let's check out the access **fields** control rules for the `users` table:
-
-`src/db/schema/users.ts`:
-
-```js
-...
-export const access: ApiConfig["access"] = {
-  operation: {...}
-  fields: {
-    id: {
-      read: (ctx, value, doc) => {
-        return isAdmin(ctx) || isAdminOrUser(ctx, doc.id);
-      },
-    },
-    email: {
-      read: (ctx, value, doc) => {
-        return isAdminOrUser(ctx, doc.id);
-      },
-    },
-    password: {
-      read:false,
-      update: isAdminOrUser,
-    },
-    role: {
-      read: (ctx, value, doc) => {
-        return isAdminOrUser(ctx, doc.id);
-      },
-      update: isAdmin,
+export const hooks: ApiConfig["hooks"] = {
+  resolveInput: {
+    create: async (context, data) => {
+      if (data && data.password) {
+        data.password = await hashString(data.password);
+      }
+      return data;
     },
   },
 };
-  ...
 ```
 
-# temp
+On the above example, we have a hook that is called before a new user is created. It hashes the password before it is saved to the database.
+
+Hooks are primarily used to create or modify data before it is saved to the database with the following two properties available:
+1. create
+1. update
+
+Ultimately this approach allows you keep any custom validations and business logic related to your data model in one place.
+
+If however, your data processing needs are more complex, you can always create a custom [route](/routing).

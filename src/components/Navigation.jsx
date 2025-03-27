@@ -217,6 +217,7 @@ export const navigation = [
       // { title: 'Data Access', href: '/data-access' },
       { title: 'Authentication', href: '/authentication' },
       { title: 'Access Control', href: '/access-control' },
+      { title: 'Hooks', href: '/hooks' },
       { title: 'File Management', href: '/file-management' },
       { title: 'Environment Variables', href: '/environment-variables' },
       { title: 'End to End Testing', href: '/e2e' },
