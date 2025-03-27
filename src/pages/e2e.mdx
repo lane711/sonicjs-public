@@ -1,0 +1,50 @@
+export const description =
+  'On this page, we’ll dive into all things file management - how to upload and manage files like images, videos, PDFs and so on'
+
+# End to End Testing
+
+<Note>Even if you're new to Playwright E2E testing, getting started is simple—just run `npm run e2e` in your terminal, and the Playwright UI will launch automatically.</Note>
+
+SonicJS uses [Playwright](https://playwright.dev/) for end-to-end (E2E) testing. While the test suite is still a work in progress, it currently includes coverage for the most critical functionality, ensuring key aspects of the platform are stable and reliable.
+
+## Current Test Coverage
+
+- ✅ **Authentication Flows**  
+  Tests cover login, logout, and session management to ensure secure and consistent access control.
+
+- ✅ **Core API Endpoints**  
+  Critical API routes are tested to verify correct behavior and error handling under various conditions.
+
+## Goals
+
+The E2E test suite will continue to expand over time, with the goal of covering:
+
+- Page rendering and navigation
+- Content creation and editing flows
+- Admin dashboard features
+- Role-based access control scenarios
+
+## Notes
+- Tests are written using Playwright's modern and reliable testing framework, which supports headless and interactive modes.
+- Contributions to improve and expand the test suite are welcome!
+
+## Running the Tests
+
+To run the Playwright tests:
+
+```bash
+npm run e2e
+``` 
+
+## Screen Shot
+
+
+![SonicJs Playwright E2E UI](/images/sonicjs-api-testing-playwright.png)
+
+Within the UI you can run all tests, individual tests, or groups of tests. You can also see the test results and logs.
+
+## Running/Debugging in VS Code
+
+You can also easily run and debug the tests themselves by clicking the icon in VS Code. Click the green arrow to run. Right-click and select "Debug" to run in debug mode:
+
+![SonicJs Playwright E2E VS Code](/images/sonicjs-e2e-test.png)
