@@ -1,11 +1,8 @@
-export const description = "SonicJs' deployment guide"
+export const description = "SonicJs' Headless CMS deployment guide"
 
-# Deploy (via command line)
+# Deploy SonicJs Headless CMS to Cloudflare
 
-You'd think deploying your code and database to over 200 global server nodes would be a headache, however its as simple as running a couple of commands.
-
-Deploying via the command line is great for early development and doing proof of concepts. However, if you need more flexibility such as setting up SonicJs
-on multiple environments, automated deployments, custom domain name, etc, please the Deploying via the Cloudflare UI section below.
+You'd think deploying your code and database to over 200 global server nodes would be a headache, however its as simple as committing code to your main branch once its setup. {{ className: 'lead' }}
 
 ## Update your production database
 
@@ -15,29 +12,6 @@ npm run up:prod
 
 This will update your production database to be in sync with your latest [schema](/persistence#schema). Of course, if you haven't
 made any schema updates, you can skip this step.
-
-## Run the deploy command
-
-```cmd
-npm run deploy
-```
-
-Deployment generally takes less than 10 seconds (deployments are incremental and therefore super-fast) and you'll get output similar to:
-
-```cmd
-🌏  Uploading... (9/9)
-
-✨ Success! Uploaded 1 files (8 already uploaded) (2.73 sec)
-
-✨ Compiled Worker successfully
-✨ Uploading Worker bundle
-✨ Deployment complete! Take a peek over at https://1d9cc497a.sonicjs.pages.dev
-```
-
-Ahhh yeah!! You can now click on the link supplied by the cli to instantly preview your app running on Cloudflare.
-
-If you haven't already, join us on [Discord](https://discord.gg/8bMy6bv3sZ). We'd love to know how you're using SonicJs as well as
-get any feedback on how we can make it better and of course even FASTER!
 
 # Deploy (via the Cloudflare UI)
 
