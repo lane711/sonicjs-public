@@ -376,6 +376,8 @@ http://localhost:8788/api/v1/posts/9d370085-c116-47c9-9b22-7f33061ec7b1
 
   </Col>
   <Col sticky>
+nx run item-management:serve-mfe
+
 
     <CodeGroup title="Request" tag="GET" label="/api/v1/user">
     ```bash {{ title: 'cURL' }}
@@ -416,7 +418,7 @@ http://localhost:8788/api/v1/user -H "Authorization: Bearer x555nastyhnyr2j6kyfy
 
 ---
 
-## Create a record {{ tag: 'POST', label: '/api/v1/user' }}
+## Create a record {{ tag: 'POST', label: '/api/v1/:table-name' }}
 
 <Row>
   <Col>
@@ -438,14 +440,13 @@ http://localhost:8788/api/v1/user -H "Authorization: Bearer x555nastyhnyr2j6kyfy
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="POST" label="/api/v1/users">
+    <CodeGroup title="Request" tag="POST" label="/api/v1/categories">
 
 ```json {{ title: 'body' }}
 {
   "data": {
-    "name": "John",
-    "email": "john@somewhere.com",
-    "role": "admin"
+    "title": "My Blog Post",
+    "body": "Lorem ipsum dolor sit amet habitasse pellentesque consectetur suspendisse.",
   }
 }
 ```
@@ -454,12 +455,14 @@ http://localhost:8788/api/v1/user -H "Authorization: Bearer x555nastyhnyr2j6kyfy
 
 ```json {{ title: 'Response (201)' }}
 {
-  "id": "9d370085-c116-47c9-9b22-7f33061ec7b9",
-  "name": "John",
-  "email": "john@somewhere.com",
-  "role": "admin",
-  "created_on": 1688780261122,
-  "updated_on": 1688780261122
+    "status": 201,
+    "data": {
+        "title": "My Blog Post",
+        "body": "Lorem ipsum dolor sit amet habitasse pellentesque consectetur suspendisse.",
+        "createdOn": 1743193952254,
+        "updatedOn": 1743193952254,
+        "id": "8f730853-d74e-4ce3-a059-b496200191eb"
+    }
 }
 ```
 
