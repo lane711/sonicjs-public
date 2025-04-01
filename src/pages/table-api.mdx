@@ -23,7 +23,6 @@ For our examples below, we'll use the `users` table defined here: `/src/db/schem
 defined [schema](/tables#schema), so all of the below endpoints are created for each table in the schema.
 
 There is an admin page in the SonicJs UI that will list out the generated APIs for your reference:
-
 <p>
   <a
     target="_blank"
@@ -33,6 +32,8 @@ There is an admin page in the SonicJs UI that will list out the generated APIs f
     http://127.0.0.1:8788/admin/api
   </a>
 </p>
+
+![SonicJs Admin UI API Spec](/images/sonicjs-admin-ui-api-list.png)
 
 ---
 
@@ -90,7 +91,7 @@ The following operators are available:<br/>
       <tr>
          <td>Equals</td>
          <td><code>$eq</code></td>
-         <td>Equal to</td>
+         <td>Equal to (use $contains for case insensitive)</td>
       </tr>
       <tr>
          <td>Doesn't equal</td>
@@ -471,7 +472,7 @@ http://localhost:8788/api/v1/user -H "Authorization: Bearer x555nastyhnyr2j6kyfy
 
 ---
 
-## Update a record {{ tag: 'PUT', label: '/api/v1/user/9d370085-c116-47c9-9b22-7f33061ec7b9' }}
+## Update a record {{ tag: 'PUT', label: '/api/v1/posts/8f730853-d74e-4ce3-a059-b496200191eb' }}
 
 <Row>
   <Col>
@@ -501,14 +502,12 @@ The ID on the record that you want to update (supplied in the url)
     <CodeGroup title="Request" tag="PUT" label="/api/v1/users/9d370085-c116-47c9-9b22-7f33061ec7b9">
 
     ```json {{ title: 'body' }}
-
-{
-"data":
-{
-"email": "updated@somewhere.com",
-}
-}
-
+    {
+      "data":
+      {
+        "title": "My Blog Post Updated",
+      }
+    }
 ````
 
     </CodeGroup>
@@ -568,5 +567,5 @@ The ID on the record that you want to delete
 ## Next Steps
 
 The automatically generated endpoints provide you with a solid foundation and can save you a lot of time, but eventually you'll want to create your own end points with custom SQL queries and
-business logic. For this, you'll want to check out the docs for the SonicJS [router](/routing).
-````
+business logic. For this, you'll want to check out the docs for SonicJS [routing](/routing).
+
