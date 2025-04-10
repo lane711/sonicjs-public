@@ -152,6 +152,12 @@ export const tableSchemas = {
   categories,
   myNewTable <-- add your new table here
 };
+
+// Export all constants from myNewTable
+export const {
+    table: myNewTable,
+    relation: myNewTableRelation,
+} = myNewTable;
 ```
 
 In order for SonicJs to see your new table, you need to create and apply and new database migration - see below...
