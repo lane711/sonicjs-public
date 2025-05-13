@@ -43,11 +43,11 @@ for our KV and D1 data stores. To do that:
 
 1. From you app's main page, navigate to Settings -> Functions
 1. In the KV namespace bindings sections, click "Add binding"
-   1. Variable Name: KVDATA
+   1. Variable Name: `KV`
    1. KV namespace: [select the KV namespace that you want to use]
       * If you don't already have a production KV namespace run the command `wrangler kv:namespace create sonicjs` 
 1. In the D1 database bindings section, click "Add binding"
-   1. Variable Name: D1DATA
+   1. Variable Name: `D1`
    1. D1 database: [select the D1 database that you want to use]
       * If you don't already have a production D1 database run the command `wrangler d1 create sonicjs` 
 1. (Optional if you want to manage files) In the R2 bucket bindings section, click "Add binding"
