@@ -230,6 +230,8 @@ export const navigation = [
     links: [
       // { title: 'Overview', href: '/api-overview' },
       { title: 'Table', href: '/table-api' },
+      { title: 'Auth', href: '/auth-api' },
+
     ],
   },
 ]

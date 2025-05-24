@@ -30,3 +30,76 @@ To add environment variables via the dashboard:
 1. (Optional) To add multiple environment variables, select Add variable.
 1. Select Save to implement your changes.
 
+
+## Available Environment Variables
+
+Here are the available environment variables you can configure in your SonicJs application:
+
+### Authentication Settings
+### Authentication Settings
+
+Note: For the latest environment variables and their default values, please refer to the example configuration at:
+[wrangler.example.toml](https://github.com/lane711/sonicjs/blob/main/wrangler.example.toml)
+
+<Properties>
+  <Property name="INVALIDATE_USER_SESSIONS" type="boolean" default="false">
+    When set to true, invalidates all existing user sessions, forcing users to log in again
+  </Property>
+  <Property name="REQUIRE_EMAIL_CONFIRMATION" type="boolean" default="true">
+    Controls whether users need to confirm their email address after registration
+  </Property>
+  <Property name="USERS_CAN_REGISTER" type="boolean" default="true">
+    Enables or disables user self-registration functionality
+  </Property>
+</Properties>
+
+### Caching
+
+<Properties>
+  <Property name="DISABLED_CACHE" type="boolean" default="true">
+    When true, disables all caching functionality in the application
+  </Property>
+</Properties>
+
+### Email Configuration
+
+<Properties>
+  <Property name="RESEND_API_KEY" type="string">
+    API key for the Resend email service
+  </Property>
+  <Property name="EMAIL_FROM" type="string">
+    Email address used as the sender for all system emails
+  </Property>
+  <Property name="EMAIL_BASE_URL" type="string">
+    Base URL of your application, used for generating email links
+  </Property>
+  <Property name="EMAIL_FROM_NAME" type="string">
+    Display name used for the sender in system emails
+  </Property>
+  <Property name="EMAIL_SEND_WELCOME_EMAIL" type="boolean" default="true">
+    Controls whether welcome emails are sent to new users
+  </Property>
+</Properties>
+
+### One-Time Password (OTP) Settings
+
+<Properties>
+  <Property name="ONE_TIME_PASSWORD_CHARACTER_LENGTH" type="number" default="5">
+    Length of generated one-time passwords
+  </Property>
+  <Property name="ONE_TIME_PASSWORD_EXPIRATION_TIME" type="number" default="1200000">
+    OTP expiration time in milliseconds (default: 20 minutes)
+  </Property>
+  <Property name="ONE_TIME_PASSWORD_EMAIL_SUBJECT" type="string">
+    Subject line for emails containing one-time passwords
+  </Property>
+</Properties>
+
+### Testing Mode
+
+<Properties>
+  <Property name="TESTING_MODE" type="boolean" default="false">
+    Enables testing endpoints and functionality. Should be set to false in production.
+  </Property>
+</Properties>
+
