@@ -1,107 +1,52 @@
 export const description =
-  'In this guide, we’ll look at how authentication works. SonicJs offers a common token based authentication.'
+  'Learn about SonicJs authentication capabilities and security features.'
 
 # Authentication
 
-SonicJs has a common token based authentication system allowing you login, obtain a valid token and supply that token to subsequent api requests. {{ className: 'lead' }}
+SonicJs provides a comprehensive and secure authentication system designed to protect your application while offering a seamless user experience. Our authentication system is built with modern security best practices and offers multiple ways for users to access your application safely. {{ className: 'lead' }}
 
-## API Login
+## Key Features
 
-1. To authorize via the API POST to `/api/v1/auth/login` with the email and password in the body
-   ```json
-   {
-     "email": "user@sonicjs.com",
-     "password": "password123"
-   }
-   ```
-1. The API will return a bearer token
+### User Registration & Email Verification
+- Secure user registration process
+- Email verification to ensure valid user accounts
+- Protection against spam and automated registrations
 
-   ```json
-   {
-     "bearer": "eo0t9q52njemo83rm1qktr6kwjh8zu5o3vma1g6j",
-     "expires": 1748197383650
-   }
-   ```
+### Multiple Authentication Methods
+- Traditional email/password login
+- One-time password (OTP) support for enhanced security
+- Flexible authentication options to suit your needs
 
-  1. You can now access `http://localhost:4321/api/v1/auth/user` to obtain session and user data for the currently logged in user:
+### Password Management
+- Secure password reset functionality
+- Email-based password recovery
+- Password strength requirements and validation
 
-      ```js
-      {
-          "session": {
-              "userId": "2026ad2d-2dc2-4187-9809-7ade12d621b1",
-              "activeExpires": 1748202525070,
-              "idleExpires": 1748202525070,
-              "createdOn": 1743018525070,
-              "updatedOn": 1743018525070,
-              "token": "eo0t9q52njemo83rm1qktr6kwjh8zu5o3vma1g6j"
-          },
-          "user": {
-              "id": "2026ad2d-2dc2-4187-9809-7ade12d621b1",
-              "firstName": "John",
-              "lastName": "Doe",
-              "profile": {},
-              "email": "demo@demo.com",
-              "role": "admin",
-              "createdOn": 1739985219999,
-              "updatedOn": 1742332702647
-          }
-      }
-      ```
+### Session Management
+- Secure session handling
+- Automatic session expiration
+- Protection against session hijacking
 
-   ## Include the Bearer Token
+### User Profile Management
+- Comprehensive user profile system
+- Role-based access control
+- Customizable user data storage
 
-1. Add the bearer token to the Authorization header on future requests
+## Benefits
 
-   ```js
-   const url =
-     'http://localhost:8788/v1/posts/c1d462a4-fd10-4bdb-bbf2-2b33a94f82aa'
-   const data = {
-     data: {
-       title: 'Test Post Update',
-     },
-   }
-   const requestOptions = {
-     method: 'PUT',
-     headers: {
-       'Content-Type': 'application/json',
-       Authorization: 'Bearer eo0t9q52njemo83rm1qktr6kwjh8zu5o3vma1g6j',
-     },
-     body: JSON.stringify(data),
-   }
-   fetch(url, requestOptions)
-   ```
+### Enhanced Security
+- Multi-factor authentication options
+- Protection against common security threats
+- Regular security updates and improvements
 
-## Logout
+### User Experience
+- Streamlined login process
+- Multiple recovery options
+- Flexible authentication methods
 
-### Client Side
+### Developer Friendly
+- Easy to implement and customize
+- Well-documented API endpoints
+- Built-in security features
 
-To logout, simply delete the token from the client side, for example in a React app it might be:
-
-   ```js
-   localStorage.removeItem('bearer')
-   ```
-
-### Server Side
-
-To Logout on the server side and delete the session record from the userSessions table:
-
-   ```js
-   const url = 'http://localhost:8788/v1/auth/logout'
-
-   const requestOptions = {
-     method: 'POST',
-     headers: {
-       'Content-Type': 'application/json',
-       Authorization: 'Bearer eo0t9q52njemo83rm1qktr6kwjh8zu5o3vma1g6j',
-     },
-   }
-   fetch(url, requestOptions)
-   ```
-
-Expected Response (200):
-
-  ```json
-  {
-    "message": "Successfully logged out"
-  }
-  ````
+For detailed technical implementation and API documentation, please refer to our [Authentication API Documentation](/auth-api).
