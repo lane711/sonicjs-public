@@ -68,6 +68,7 @@ This includes the ability to:
       "error": "Invalid email/password combination"
     }
     ```
+
   </Col>
 </Row>
 
@@ -120,14 +121,16 @@ This includes the ability to:
     <CodeGroup title="Request" tag="POST" label="/api/v1/users">
     ```json {{ title: 'body' }}
     {
-      "email": "user@example.com",
-      "password": "userpassword",
-      "firstName": "John",
-      "lastName": "Doe",
-      "role": "user",
-      "profile": {
-        "company": "Example Corp",
-        "position": "Developer"
+      "data": {
+        "email": "user@example.com",
+        "password": "userpassword",
+        "firstName": "John",
+        "lastName": "Doe",
+        "role": "user",
+        "profile": {
+          "company": "Example Corp",
+          "position": "Developer"
+        }
       }
     }
     ```
@@ -162,6 +165,7 @@ This includes the ability to:
       "error": "Invalid email format"
     }
     ```
+
   </Col>
 </Row>
 
@@ -223,6 +227,7 @@ This includes the ability to:
       "error": "No token provided or invalid token"
     }
     ```
+
   </Col>
 </Row>
 
@@ -263,6 +268,7 @@ This includes the ability to:
       "message": "Successfully logged out"
     }
     ```
+
   </Col>
 </Row>
 
@@ -303,6 +309,7 @@ This includes the ability to:
       "message": "If the email address is valid, a password reset email has been sent"
     }
     ```
+
   </Col>
 </Row>
 
@@ -359,6 +366,7 @@ This includes the ability to:
       "error": "Invalid reset code, expired code, or missing fields"
     }
     ```
+
   </Col>
 </Row>
 
@@ -405,6 +413,7 @@ This includes the ability to:
       "error": "User not found"
     }
     ```
+
   </Col>
 </Row>
 
@@ -445,6 +454,7 @@ This includes the ability to:
       "message": "Confirmation email sent"
     }
     ```
+
   </Col>
 </Row>
 
@@ -518,6 +528,7 @@ This includes the ability to:
       "confirmed": true
     }
     ```
+
   </Col>
 </Row>
 
@@ -569,4 +580,3 @@ The following environment variables are used by the authentication system:
 ## Next Steps
 
 The authentication endpoints provide you with a solid foundation for user management. For more advanced features, you may want to check out the docs for SonicJS [routing](/routing) to create custom authentication flows.
-
