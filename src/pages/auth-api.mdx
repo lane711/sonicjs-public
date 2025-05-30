@@ -464,7 +464,7 @@ This includes the ability to:
 
 <Row>
   <Col>
-    This endpoint confirms the user's email address using the confirmation code.
+    This endpoint confirms the user's email address using the confirmation code and automatically logs them in.
 
     ### Required attributes
 
@@ -475,7 +475,19 @@ This includes the ability to:
     </Properties>
 
     ### Return Data
-    Redirects to the configured `EMAIL_CONFIRMATION_REDIRECT_URL`
+    Redirects to the configured `EMAIL_CONFIRMATION_REDIRECT_URL` with an active session
+
+    ### Auto Login
+    After successful email confirmation, the system automatically:
+    - Creates a new session for the user
+    - Sets the session token in cookies
+    - Redirects to the configured redirect URL
+
+    ### Security
+    - The confirmation token is single-use and expires after a set period
+    - Session creation follows the same security protocols as manual login
+    - Session tokens are generated using secure random strings
+    - All sessions have configurable expiration times
 
   </Col>
   <Col sticky>
@@ -557,6 +569,9 @@ The following environment variables are used by the authentication system:
   </Property>
   <Property name="EMAIL_CONFIRMATION_REDIRECT_URL" type="string">
     URL to redirect after email confirmation
+  </Property>
+  <Property name="AUTO_LOGIN_AFTER_EMAIL_CONFIRMATION" type="boolean" default="true">
+    Controls whether users are automatically logged in after email confirmation
   </Property>
   <Property name="ONE_TIME_PASSWORD_EXPIRATION_TIME" type="number">
     OTP expiration time in milliseconds
