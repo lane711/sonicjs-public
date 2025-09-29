@@ -204,6 +204,7 @@ export const navigation = [
       { title: 'Legacy', href: '/legacy' },
       { title: 'Headless', href: '/headless-cms' },
       { title: 'About', href: '/about' },
+      { title: 'Roadmap', href: '/roadmap' },
     ],
   },
   {

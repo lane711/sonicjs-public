@@ -1,14 +1,64 @@
 # Getting Started
 
-See full <a  target="_blank" href="https://github.com/lane711/sonicjs?tab=readme-ov-file#getting-started">getting started guide here</a>.
+Get up and running with SonicJS in just a few minutes!
 
-Once you have completed the getting started procoess, you will be able to start SonicJs locally by running the following command:
+## Prerequisites
 
-```text
+You will need a free Cloudflare account: [https://dash.cloudflare.com/sign-up](https://dash.cloudflare.com/sign-up)
+
+## Installation Steps
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/lane711/sonicjs.git
+cd sonicjs
+npm install
+```
+
+### 2. Create Cloudflare Configuration
+
+```bash
+cp wrangler.example.toml wrangler.toml
+```
+
+### 3. Create Cloudflare D1 Database
+
+```bash
+npx wrangler d1 create sonicjs
+```
+
+- Login to Cloudflare when prompted
+- Copy the generated database ID from the output
+
+### 4. Update Configuration
+
+Update your `wrangler.toml` file with the database ID from step 3:
+
+```toml
+[[d1_databases]]
+binding = "D1"
+database_name = "sonicjs"
+database_id = "YOUR_DATABASE_ID_HERE"
+```
+
+Replace `YOUR_DATABASE_ID_HERE` with the actual database ID from the previous step.
+
+### 5. Apply Database Schema
+
+```bash
+npm run up
+```
+
+### 6. Start Development Server
+
+```bash
 npm run dev
 ```
 
-This will start the local server running at: http://localhost:4321
+### 7. Access Admin UI
+
+Open [http://localhost:4321](http://localhost:4321) in your browser to access the SonicJS admin interface.
 
 ![SonicJs Admin UI](/images/sonicJs-admin-ui.png)
 
