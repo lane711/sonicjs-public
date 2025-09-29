@@ -101,7 +101,7 @@ export default function (nextConfig = {}) {
                   sectionIndex.add({
                     url: url + (hash ? ('#' + hash) : ''),
                     title,
-                    content: [title, ...content].join('\\n'),
+                    content: [title, ...content].join('\\\\n'),
                     pageTitle: hash ? sections[0][0] : undefined,
                   })
                 }
