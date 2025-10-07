@@ -11,6 +11,8 @@ This guide covers deploying the SonicJS documentation site to Cloudflare Workers
 
 ## Quick Deploy to Cloudflare Workers
 
+⚠️ **IMPORTANT**: This project uses `@opennextjs/cloudflare` to deploy Next.js to Cloudflare Workers.
+
 ### 1. Install Dependencies
 
 ```bash
@@ -23,21 +25,22 @@ npm install
 npx wrangler login
 ```
 
-### 3. Build and Deploy
+### 3. Deploy
 
 ```bash
-# Build the site
-npm run build
-
-# Deploy to Cloudflare Workers
+# Build and deploy in one command (RECOMMENDED)
 npm run deploy
 ```
 
-Or use the combined command:
+This will:
+1. Build the Next.js site
+2. Transform it for Cloudflare Workers using OpenNext
+3. Deploy to Cloudflare
 
-```bash
-npm run upload
-```
+**What happens:**
+- Creates `.open-next/` directory with Worker-compatible code
+- Deploys via Wrangler
+- Your site will be live at `https://sonicjs-docs.workers.dev`
 
 ## Deployment Commands
 
@@ -89,16 +92,16 @@ If you prefer Cloudflare Pages over Workers:
 
 ### 2. Build Configuration
 
-**Framework preset**: Next.js
+**Framework preset**: **None** (select Custom)
 
 **Build command**:
 ```bash
-npm run build
+npx @opennextjs/cloudflare build
 ```
 
 **Build output directory**:
 ```
-.next
+.open-next
 ```
 
 **Node.js version**:
@@ -106,12 +109,31 @@ npm run build
 20.18.0
 ```
 
-**Environment Variables** (if needed):
-- None required for basic deployment
+**Environment Variables**:
+Add this in Cloudflare Pages settings:
+- Name: `NODE_VERSION`
+- Value: `20.18.0`
 
 ### 3. Deploy
 
 Cloudflare Pages will automatically deploy on every push to your main branch.
+
+### ⚠️ Critical: Remove Wrong Build Command
+
+If you see this error:
+```
+`next export` has been removed...
+```
+
+This means Cloudflare has a saved build command with `next export`.
+
+**Fix it:**
+1. Go to your Cloudflare Pages project
+2. Click **Settings** → **Builds & deployments**
+3. Find **Build command** and click **Edit**
+4. Change to: `npx @opennextjs/cloudflare build`
+5. Change **Build output directory** to: `.open-next`
+6. Save and retry deployment
 
 ## Vercel Alternative
 
