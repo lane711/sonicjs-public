@@ -1,98 +1,202 @@
 export const metadata = {
-  title: 'Quickstart',
+  title: 'Quickstart - SonicJS',
   description:
-    'This guide will get you all set up and ready to use the Protocol API. We’ll cover how to get started an API client and how to make your first API request.',
+    'Get SonicJS up and running in under 60 seconds. Learn how to install, configure, and create your first content.',
 }
+
+export const sections = [
+  { title: 'Prerequisites', id: 'prerequisites' },
+  { title: 'Quick Start', id: 'quick-start' },
+  { title: 'First Steps', id: 'first-steps' },
+  { title: 'Next Steps', id: 'next-steps' },
+]
 
 # Quickstart
 
-This guide will get you all set up and ready to use the Protocol API. We'll cover how to get started using one of our API clients and how to make your first API request. We'll also look at where to go next to find all the information you need to take full advantage of our powerful REST API. {{ className: 'lead' }}
+Get SonicJS running in under 60 seconds and create your first content-driven application. {{ className: 'lead' }}
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- **Node.js** (version 18 or higher)
+- **npm** or **pnpm**
+- **Git**
 
 <Note>
-  Before you can make requests to the Protocol API, you will need to grab your
-  API key from your dashboard. You find it under [Settings &raquo; API](#).
+For production deployment, you'll also need a **Cloudflare account** with access to Workers, D1, KV, and R2.
 </Note>
 
-## Choose your client
+---
 
-Before making your first API request, you need to pick which API client you will use. In addition to good ol' cURL HTTP requests, Protocol offers clients for JavaScript, Python, and PHP. In the following example, you can see how to install each client.
+## Quick Start
 
-<CodeGroup>
+Get SonicJS running locally with these simple commands:
 
-```bash {{ title: 'cURL' }}
-# cURL is most likely already installed on your machine
-curl --version
-```
+<CodeGroup title="60-Second Setup">
 
-```bash {{ language: 'js' }}
-# Install the Protocol JavaScript SDK
-npm install @example/protocol-api --save
-```
+```bash
+# Clone the repository
+git clone https://github.com/lane711/sonicjs.git
+cd sonicjs
 
-```bash {{ language: 'python' }}
-# Install the Protocol Python SDK
-pip install protocol_api
-```
+# Install dependencies
+npm install
 
-```bash {{ language: 'php' }}
-# Install the Protocol PHP SDK
-composer require protocol/sdk
-```
+# Run database migrations
+npm run db:migrate
 
-</CodeGroup>
+# Start development server
+npm run dev
 
-<div className="not-prose">
-  <Button href="/sdks" variant="text" arrow="right">
-    <>Check out our list of first-party SDKs</>
-  </Button>
-</div>
-
-## Making your first API request
-
-After picking your preferred client, you are ready to make your first call to the Protocol API. Below, you can see how to send a GET request to the Conversations endpoint to get a list of all your conversations. In the cURL example, results are limited to ten conversations, the default page length for each client.
-
-<CodeGroup tag="GET" label="/v1/conversations">
-
-```bash {{ title: 'cURL' }}
-curl -G https://api.protocol.chat/v1/conversations \
-  -H "Authorization: Bearer {token}" \
-  -d limit=10
-```
-
-```js
-import ApiClient from '@example/protocol-api'
-
-const client = new ApiClient(token)
-
-await client.conversations.list()
-```
-
-```python
-from protocol_api import ApiClient
-
-client = ApiClient(token)
-
-client.conversations.list()
-```
-
-```php
-$client = new \Protocol\ApiClient($token);
-
-$client->conversations->list();
+# Your CMS is now running at http://localhost:8787
 ```
 
 </CodeGroup>
 
+Your SonicJS instance will be available at **http://localhost:8787**
+
+<Note>
+Access the admin dashboard at [http://localhost:8787/admin](http://localhost:8787/admin)
+
+Default credentials: `admin@sonicjs.com` / `admin123`
+</Note>
+
+---
+
+## First Steps
+
+### Access the Admin Dashboard
+
+Navigate to **http://localhost:8787/admin** and log in with the default credentials.
+
+The admin interface provides:
+
+- **System Overview** - Real-time health checks and activity feed
+- **Content Management** - Create, edit, and publish content
+- **Media Library** - Upload and manage media files
+- **Plugin Management** - Install and configure plugins
+- **User Management** - Manage users, roles, and permissions
+
+### Create Your First Content
+
+**Via Admin UI:**
+
+1. Navigate to **Content** → **New Content**
+2. Select a collection (e.g., "Blog Posts")
+3. Fill in the fields and click **Save**
+
+**Via API:**
+
+<CodeGroup title="Create Content">
+
+```bash {{ title: 'cURL' }}
+# Get auth token
+curl -X POST http://localhost:8787/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"admin@sonicjs.com","password":"admin123"}'
+
+# Create content
+curl -X POST http://localhost:8787/admin/content \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -d '{
+    "collection": "blog_posts",
+    "title": "My First Post",
+    "data": {
+      "slug": "my-first-post",
+      "content": "<p>Hello World!</p>",
+      "status": "published"
+    }
+  }'
+```
+
+```javascript
+// Get auth token
+const authResponse = await fetch('http://localhost:8787/auth/login', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    email: 'admin@sonicjs.com',
+    password: 'admin123'
+  })
+});
+const { token } = await authResponse.json();
+
+// Create content
+const response = await fetch('http://localhost:8787/admin/content', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  },
+  body: JSON.stringify({
+    collection: 'blog_posts',
+    title: 'My First Post',
+    data: {
+      slug: 'my-first-post',
+      content: '<p>Hello World!</p>',
+      status: 'published'
+    }
+  })
+});
+```
+
+</CodeGroup>
+
+### Fetch Content via API
+
+<CodeGroup title="Fetch Content">
+
+```bash {{ title: 'cURL' }}
+# Get all content
+curl http://localhost:8787/api/content
+
+# Get content by collection
+curl http://localhost:8787/api/collections/blog_posts/content
+
+# Get single content item
+curl http://localhost:8787/api/content/:id
+```
+
+```javascript
+// Get all content
+const response = await fetch('http://localhost:8787/api/content');
+const data = await response.json();
+
+// Get content by collection
+const posts = await fetch('http://localhost:8787/api/collections/blog_posts/content');
+const blogPosts = await posts.json();
+```
+
+</CodeGroup>
+
+---
+
+## Next Steps
+
+Now that you have SonicJS running, explore these guides:
+
 <div className="not-prose">
-  <Button href="/conversations" variant="text" arrow="right">
-    <>Read the docs for the Conversations endpoint</>
+  <Button href="/collections" variant="text" arrow="right">
+    <>Define custom collections</>
   </Button>
 </div>
 
-## What's next?
+<div className="not-prose mt-4">
+  <Button href="/architecture" variant="text" arrow="right">
+    <>Learn about the architecture</>
+  </Button>
+</div>
 
-Great, you're now set up with an API client and have made your first request to the API. Here are a few links that might be handy as you venture further into the Protocol API:
+<div className="not-prose mt-4">
+  <Button href="/api" variant="text" arrow="right">
+    <>Explore the API reference</>
+  </Button>
+</div>
 
-- [Grab your API key from the Protocol dashboard](#)
-- [Check out the Conversations endpoint](/conversations)
-- [Learn about the different error messages in Protocol](/errors)
+<div className="not-prose mt-4">
+  <Button href="/deployment" variant="text" arrow="right">
+    <>Deploy to production</>
+  </Button>
+</div>

@@ -10,10 +10,10 @@ import Link from 'next/link'
 
 import { GridPattern } from '@/components/GridPattern'
 import { Heading } from '@/components/Heading'
-import { ChatBubbleIcon } from '@/components/icons/ChatBubbleIcon'
-import { EnvelopeIcon } from '@/components/icons/EnvelopeIcon'
-import { UserIcon } from '@/components/icons/UserIcon'
-import { UsersIcon } from '@/components/icons/UsersIcon'
+import { BoltIcon } from '@/components/icons/BoltIcon'
+import { CogIcon } from '@/components/icons/CogIcon'
+import { DocumentIcon } from '@/components/icons/DocumentIcon'
+import { SquaresPlusIcon } from '@/components/icons/SquaresPlusIcon'
 
 interface Resource {
   href: string
@@ -28,11 +28,11 @@ interface Resource {
 
 const resources: Array<Resource> = [
   {
-    href: '/contacts',
-    name: 'Contacts',
+    href: '/architecture',
+    name: 'Architecture',
     description:
-      'Learn about the contact model and how to create, retrieve, update, delete, and list contacts.',
-    icon: UserIcon,
+      'Understand the system design, request lifecycle, and how SonicJS leverages Cloudflare Workers.',
+    icon: CogIcon,
     pattern: {
       y: 16,
       squares: [
@@ -42,11 +42,11 @@ const resources: Array<Resource> = [
     },
   },
   {
-    href: '/conversations',
-    name: 'Conversations',
+    href: '/api',
+    name: 'API Reference',
     description:
-      'Learn about the conversation model and how to create, retrieve, update, delete, and list conversations.',
-    icon: ChatBubbleIcon,
+      'Complete REST API documentation with endpoints, authentication, and response examples.',
+    icon: DocumentIcon,
     pattern: {
       y: -6,
       squares: [
@@ -56,11 +56,11 @@ const resources: Array<Resource> = [
     },
   },
   {
-    href: '/messages',
-    name: 'Messages',
+    href: '/caching',
+    name: 'Caching',
     description:
-      'Learn about the message model and how to create, retrieve, update, delete, and list messages.',
-    icon: EnvelopeIcon,
+      'Three-tier caching system with memory, KV, and database layers for sub-millisecond performance.',
+    icon: BoltIcon,
     pattern: {
       y: 32,
       squares: [
@@ -70,11 +70,11 @@ const resources: Array<Resource> = [
     },
   },
   {
-    href: '/groups',
-    name: 'Groups',
+    href: '/plugins/development',
+    name: 'Plugin Development',
     description:
-      'Learn about the group model and how to create, retrieve, update, delete, and list groups.',
-    icon: UsersIcon,
+      'Build custom plugins with hooks, middleware, routes, and services to extend SonicJS.',
+    icon: SquaresPlusIcon,
     pattern: {
       y: 22,
       squares: [[0, 1]],

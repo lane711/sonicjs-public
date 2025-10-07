@@ -81,9 +81,9 @@ export const Header = forwardRef<
       <div className="flex items-center gap-5">
         <nav className="hidden md:block">
           <ul role="list" className="flex items-center gap-8">
-            <TopLevelNavItem href="/">API</TopLevelNavItem>
-            <TopLevelNavItem href="#">Documentation</TopLevelNavItem>
-            <TopLevelNavItem href="#">Support</TopLevelNavItem>
+            <TopLevelNavItem href="/api">API</TopLevelNavItem>
+            <TopLevelNavItem href="https://github.com/lane711/sonicjs">GitHub</TopLevelNavItem>
+            <TopLevelNavItem href="https://github.com/lane711/sonicjs/discussions">Community</TopLevelNavItem>
           </ul>
         </nav>
         <div className="hidden md:block md:h-5 md:w-px md:bg-zinc-900/10 md:dark:bg-white/15" />
@@ -92,7 +92,7 @@ export const Header = forwardRef<
           <ThemeToggle />
         </div>
         <div className="hidden min-[416px]:contents">
-          <Button href="#">Sign in</Button>
+          <Button href="/quickstart">Get Started</Button>
         </div>
       </div>
     </motion.div>

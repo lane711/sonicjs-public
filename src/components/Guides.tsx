@@ -3,26 +3,24 @@ import { Heading } from '@/components/Heading'
 
 const guides = [
   {
+    href: '/quickstart',
+    name: 'Quickstart',
+    description: 'Get SonicJS running in under 60 seconds and create your first content.',
+  },
+  {
+    href: '/collections',
+    name: 'Collections',
+    description: 'Define content types with TypeScript schemas and field validation.',
+  },
+  {
     href: '/authentication',
     name: 'Authentication',
-    description: 'Learn how to authenticate your API requests.',
+    description: 'Secure your CMS with JWT authentication and role-based access control.',
   },
   {
-    href: '/pagination',
-    name: 'Pagination',
-    description: 'Understand how to work with paginated responses.',
-  },
-  {
-    href: '/errors',
-    name: 'Errors',
-    description:
-      'Read about the different types of errors returned by the API.',
-  },
-  {
-    href: '/webhooks',
-    name: 'Webhooks',
-    description:
-      'Learn how to programmatically configure webhooks for your app.',
+    href: '/plugins',
+    name: 'Plugin System',
+    description: 'Extend SonicJS with powerful plugins and custom functionality.',
   },
 ]
 

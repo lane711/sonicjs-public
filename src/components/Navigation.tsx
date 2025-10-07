@@ -234,25 +234,52 @@ function NavigationGroup({
 
 export const navigation: Array<NavGroup> = [
   {
-    title: 'Guides',
+    title: 'Getting Started',
     links: [
       { title: 'Introduction', href: '/' },
       { title: 'Quickstart', href: '/quickstart' },
-      { title: 'SDKs', href: '/sdks' },
+      { title: 'Installation', href: '/installation' },
+    ],
+  },
+  {
+    title: 'Core Concepts',
+    links: [
+      { title: 'Architecture', href: '/architecture' },
+      { title: 'Collections', href: '/collections' },
+      { title: 'Caching', href: '/caching' },
       { title: 'Authentication', href: '/authentication' },
-      { title: 'Pagination', href: '/pagination' },
-      { title: 'Errors', href: '/errors' },
-      { title: 'Webhooks', href: '/webhooks' },
+    ],
+  },
+  {
+    title: 'Developer Guide',
+    links: [
+      { title: 'API Reference', href: '/api' },
+      { title: 'Database', href: '/database' },
+      { title: 'Templating', href: '/templating' },
+      { title: 'Routing & Middleware', href: '/routing' },
+    ],
+  },
+  {
+    title: 'Plugin System',
+    links: [
+      { title: 'Overview', href: '/plugins' },
+      { title: 'Development Guide', href: '/plugins/development' },
+      { title: 'Core Plugins', href: '/plugins/core' },
+    ],
+  },
+  {
+    title: 'Deployment',
+    links: [
+      { title: 'Production Deployment', href: '/deployment' },
+      { title: 'Testing', href: '/testing' },
     ],
   },
   {
     title: 'Resources',
     links: [
-      { title: 'Contacts', href: '/contacts' },
-      { title: 'Conversations', href: '/conversations' },
-      { title: 'Messages', href: '/messages' },
-      { title: 'Groups', href: '/groups' },
-      { title: 'Attachments', href: '/attachments' },
+      { title: 'Examples', href: '/examples' },
+      { title: 'FAQ', href: '/faq' },
+      { title: 'Community', href: '/community' },
     ],
   },
 ]
@@ -261,9 +288,9 @@ export function Navigation(props: React.ComponentPropsWithoutRef<'nav'>) {
   return (
     <nav {...props}>
       <ul role="list">
-        <TopLevelNavItem href="/">API</TopLevelNavItem>
-        <TopLevelNavItem href="#">Documentation</TopLevelNavItem>
-        <TopLevelNavItem href="#">Support</TopLevelNavItem>
+        <TopLevelNavItem href="/">Documentation</TopLevelNavItem>
+        <TopLevelNavItem href="https://github.com/lane711/sonicjs">GitHub</TopLevelNavItem>
+        <TopLevelNavItem href="https://github.com/lane711/sonicjs/discussions">Community</TopLevelNavItem>
         {navigation.map((group, groupIndex) => (
           <NavigationGroup
             key={group.title}
@@ -272,8 +299,8 @@ export function Navigation(props: React.ComponentPropsWithoutRef<'nav'>) {
           />
         ))}
         <li className="sticky bottom-0 z-10 mt-6 min-[416px]:hidden">
-          <Button href="#" variant="filled" className="w-full">
-            Sign in
+          <Button href="/quickstart" variant="filled" className="w-full">
+            Get Started
           </Button>
         </li>
       </ul>

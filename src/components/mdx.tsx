@@ -8,6 +8,11 @@ import { Prose } from '@/components/Prose'
 export const a = Link
 export { Button } from '@/components/Button'
 export { CodeGroup, Code as code, Pre as pre } from '@/components/Code'
+export { Callout } from '@/components/Callout'
+export { Tabs } from '@/components/Tabs'
+export { ApiEndpoint } from '@/components/ApiEndpoint'
+export { CodeExample } from '@/components/CodeExample'
+export { FeatureGrid } from '@/components/FeatureGrid'
 
 export function wrapper({ children }: { children: React.ReactNode }) {
   return (
