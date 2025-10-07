@@ -1,19 +1,17 @@
-import { mdxAnnotations } from 'mdx-annotations'
-import { visit } from 'unist-util-visit'
-import rehypeMdxTitle from 'rehype-mdx-title'
-import shiki from 'shiki'
-import { toString } from 'mdast-util-to-string'
-import * as acorn from 'acorn'
 import { slugifyWithCounter } from '@sindresorhus/slugify'
+import * as acorn from 'acorn'
+import { toString } from 'mdast-util-to-string'
+import { mdxAnnotations } from 'mdx-annotations'
+import shiki from 'shiki'
+import { visit } from 'unist-util-visit'
 
 function rehypeParseCodeBlocks() {
   return (tree) => {
     visit(tree, 'element', (node, _nodeIndex, parentNode) => {
-      if (node.tagName === 'code' && node.properties.className) {
-        parentNode.properties.language = node.properties.className[0]?.replace(
-          /^language-/,
-          ''
-        )
+      if (node.tagName === 'code') {
+        parentNode.properties.language = node.properties.className
+          ? node.properties?.className[0]?.replace(/^language-/, '')
+          : 'txt'
       }
     })
   }
@@ -36,7 +34,7 @@ function rehypeShiki() {
         if (node.properties.language) {
           let tokens = highlighter.codeToThemedTokens(
             textNode.value,
-            node.properties.language
+            node.properties.language,
           )
 
           textNode.value = shiki.renderToHtml(tokens, {
@@ -116,7 +114,6 @@ export const rehypePlugins = [
   rehypeParseCodeBlocks,
   rehypeShiki,
   rehypeSlugify,
-  rehypeMdxTitle,
   [
     rehypeAddMDXExports,
     (tree) => ({
