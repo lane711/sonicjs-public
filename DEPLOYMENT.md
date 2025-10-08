@@ -158,7 +158,7 @@ Follow the prompts to complete deployment.
 ### Development
 ```bash
 npm run dev
-# Site runs at http://localhost:3000
+# Site runs at http://localhost:3010
 ```
 
 ### Preview (Cloudflare)
